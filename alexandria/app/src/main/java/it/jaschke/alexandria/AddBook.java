@@ -1,7 +1,6 @@
 package it.jaschke.alexandria;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -19,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import it.jaschke.alexandria.data.AlexandriaContract;
 import it.jaschke.alexandria.services.BookService;
@@ -90,19 +91,8 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         rootView.findViewById(R.id.scan_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // This is the callback method that the system will invoke when your button is
-                // clicked. You might do this by launching another app or by including the
-                //functionality directly in this app.
-                // Hint: Use a Try/Catch block to handle the Intent dispatch gracefully, if you
-                // are using an external app.
-                //when you're done, remove the toast below.
-                Context context = getActivity();
-                CharSequence text = "This button should let you scan a book for its barcode!";
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-
+                // start barcode scan
+                startBarcodeScan();
             }
         });
 
@@ -124,7 +114,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
             }
         });
 
-        if(savedInstanceState!=null){
+        if (savedInstanceState!=null){
             ean.setText(savedInstanceState.getString(EAN_CONTENT));
             ean.setHint("");
         }
@@ -203,5 +193,34 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         activity.setTitle(R.string.scan);
+    }
+
+    /**
+     * This is the callback for Barcode scan result
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(result != null) {
+            String code = result.getContents();
+            if(code == null) {
+                Toast.makeText(getActivity(), "Scan cancelled", Toast.LENGTH_LONG).show();
+            } else {
+                ean.setText(code);
+            }
+        }
+    }
+
+    /**
+     * Start scanning activity with any screen orientation
+     */
+    public void startBarcodeScan() {
+        IntentIntegrator integrator = IntentIntegrator.forSupportFragment(this);
+        integrator.setCaptureActivity(CaptureAnyOrientationActivity.class);
+        integrator.setOrientationLocked(false);
+        integrator.initiateScan();
     }
 }
