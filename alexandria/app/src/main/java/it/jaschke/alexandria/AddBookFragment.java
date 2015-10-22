@@ -24,6 +24,7 @@ import com.google.zxing.integration.android.IntentResult;
 import it.jaschke.alexandria.data.AlexandriaContract;
 import it.jaschke.alexandria.services.BookService;
 import it.jaschke.alexandria.services.DownloadImage;
+import it.jaschke.alexandria.util.Utilities;
 
 
 public class AddBookFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -79,12 +80,18 @@ public class AddBookFragment extends Fragment implements LoaderManager.LoaderCal
                     clearFields();
                     return;
                 }
-                //Once we have an ISBN, start a book intent
-                Intent bookIntent = new Intent(getActivity(), BookService.class);
-                bookIntent.putExtra(BookService.EAN, ean);
-                bookIntent.setAction(BookService.FETCH_BOOK);
-                getActivity().startService(bookIntent);
-                AddBookFragment.this.restartLoader();
+                //Now we have an ISBN
+
+                //Check network availability
+                if(Utilities.isNetworkAvailable(getActivity())) {
+                    Intent bookIntent = new Intent(getActivity(), BookService.class);
+                    bookIntent.putExtra(BookService.EAN, ean);
+                    bookIntent.setAction(BookService.FETCH_BOOK);
+                    getActivity().startService(bookIntent);
+                    AddBookFragment.this.restartLoader();
+                } else {
+                    Toast.makeText(getActivity(), R.string.network_unavailable, Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -207,7 +214,7 @@ public class AddBookFragment extends Fragment implements LoaderManager.LoaderCal
         if(result != null) {
             String code = result.getContents();
             if(code == null) {
-                Toast.makeText(getActivity(), "Scan cancelled", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), R.string.scan_cancelled, Toast.LENGTH_LONG).show();
             } else {
                 ean.setText(code);
             }
