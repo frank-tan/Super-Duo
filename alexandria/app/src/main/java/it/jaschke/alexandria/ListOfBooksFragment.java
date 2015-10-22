@@ -25,6 +25,7 @@ public class ListOfBooksFragment extends Fragment implements LoaderManager.Loade
     private ListView bookList;
     private int position = ListView.INVALID_POSITION;
     private EditText searchText;
+    private Cursor mCursor;
 
     private final int LOADER_ID = 10;
 
@@ -39,7 +40,7 @@ public class ListOfBooksFragment extends Fragment implements LoaderManager.Loade
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        Cursor cursor = getActivity().getContentResolver().query(
+        mCursor = getActivity().getContentResolver().query(
                 AlexandriaContract.BookEntry.CONTENT_URI,
                 null, // leaving "columns" null just returns all the columns.
                 null, // cols for "where" clause
@@ -48,7 +49,7 @@ public class ListOfBooksFragment extends Fragment implements LoaderManager.Loade
         );
 
 
-        bookListAdapter = new BookListAdapter(getActivity(), cursor, 0);
+        bookListAdapter = new BookListAdapter(getActivity(), mCursor, 0);
         View rootView = inflater.inflate(R.layout.fragment_list_of_books, container, false);
         searchText = (EditText) rootView.findViewById(R.id.searchText);
         rootView.findViewById(R.id.searchButton).setOnClickListener(
@@ -76,6 +77,15 @@ public class ListOfBooksFragment extends Fragment implements LoaderManager.Loade
         });
 
         return rootView;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // Close the cursor when the fragment is destroyed.
+        if(!mCursor.isClosed()) {
+            mCursor.close();
+        }
     }
 
     private void restartLoader(){
