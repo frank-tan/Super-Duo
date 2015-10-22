@@ -27,7 +27,7 @@ public class ListOfBooksFragment extends Fragment implements LoaderManager.Loade
     private EditText searchText;
     private Cursor mCursor;
 
-    private final int LOADER_ID = 10;
+    private static final int LOADER_ID = 10;
 
     public ListOfBooksFragment() {
     }
@@ -83,7 +83,7 @@ public class ListOfBooksFragment extends Fragment implements LoaderManager.Loade
     public void onDestroy() {
         super.onDestroy();
         // Close the cursor when the fragment is destroyed.
-        if(!mCursor.isClosed()) {
+        if(mCursor!= null && !mCursor.isClosed()) {
             mCursor.close();
         }
     }

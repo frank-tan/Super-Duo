@@ -26,10 +26,9 @@ import it.jaschke.alexandria.services.DownloadImage;
 public class BookDetailFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     public static final String EAN_KEY = "EAN";
-    private final int LOADER_ID = 10;
+    private static final int LOADER_ID = 10;
     private View rootView;
     private String ean;
-    private String bookTitle;
     private ShareActionProvider shareActionProvider;
 
     public BookDetailFragment(){
@@ -92,7 +91,7 @@ public class BookDetailFragment extends Fragment implements LoaderManager.Loader
             return;
         }
 
-        bookTitle = data.getString(data.getColumnIndex(AlexandriaContract.BookEntry.TITLE));
+        String bookTitle = data.getString(data.getColumnIndex(AlexandriaContract.BookEntry.TITLE));
         ((TextView) rootView.findViewById(R.id.fullBookTitle)).setText(bookTitle);
 
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
