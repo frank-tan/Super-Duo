@@ -5,6 +5,8 @@
     <!-- Menu Items -->
     <string name="books">List of Books</string>
     <string name="scan">Scan/Add a Book</string>
+    <string name="books_value">0</string>
+    <string name="scan_value">1</string>
     <string name="about">About this App</string>
 
     <string name="navigation_drawer_open" >Open navigation drawer</string>

@@ -6,7 +6,7 @@
     </string-array>
 
     <string-array name="pref_start_values">
-        <item>0</item>
-        <item>1</item>
+        <item>@string/books_value</item>
+        <item>@string/scan_value</item>
     </string-array>
 </resources>
