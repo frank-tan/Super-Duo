@@ -1,4 +1,4 @@
-package it.jaschke.alexandria;
+package it.jaschke.alexandria.ui;
 
 import com.journeyapps.barcodescanner.CaptureActivity;
 

@@ -1,4 +1,4 @@
-package it.jaschke.alexandria;
+package it.jaschke.alexandria.ui;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import it.jaschke.alexandria.R;
 import it.jaschke.alexandria.api.Callback;
 
 

@@ -1,4 +1,4 @@
-package it.jaschke.alexandria;
+package it.jaschke.alexandria.ui;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -11,6 +11,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +21,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import it.jaschke.alexandria.R;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -76,6 +79,7 @@ public class NavigationDrawerFragment extends Fragment {
             mFromSavedInstanceState = true;
         }else{
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            Log.d("alexandria",prefs.getString("pref_startFragment","-1"));
             mCurrentSelectedPosition = Integer.parseInt(prefs.getString("pref_startFragment","0"));
             selectItem(mCurrentSelectedPosition);
         }
