@@ -134,7 +134,7 @@ public class BookDetailFragment extends Fragment implements LoaderManager.Loader
     @Override
     public void onPause() {
         super.onDestroyView();
-        if(MainActivity.IS_TABLET && rootView.findViewById(R.id.right_container)==null){
+        if(MainActivity.mIsTablet && rootView.findViewById(R.id.right_container)==null){
             getActivity().getSupportFragmentManager().popBackStack();
         }
     }

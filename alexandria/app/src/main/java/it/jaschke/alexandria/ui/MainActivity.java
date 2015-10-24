@@ -29,11 +29,11 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
     private NavigationDrawerFragment navigationDrawerFragment;
 
     /**
-     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
+     * Used to store the last screen mTitle. For use in {@link #restoreActionBar()}.
      */
-    private CharSequence title;
-    public static boolean IS_TABLET = false;
-    private BroadcastReceiver messageReciever;
+    private CharSequence mTitle;
+    public static boolean mIsTablet = false;
+    private BroadcastReceiver mBroadcastReceiver;
 
     public static final String MESSAGE_EVENT = "MESSAGE_EVENT";
     public static final String MESSAGE_KEY = "MESSAGE_EXTRA";
@@ -41,20 +41,21 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        IS_TABLET = isTablet();
-        if(IS_TABLET){
+        mIsTablet = isTablet();
+        if(mIsTablet){
             setContentView(R.layout.activity_main_tablet);
-        }else {
+        } else {
             setContentView(R.layout.activity_main);
         }
 
-        messageReciever = new MessageReciever();
+        // // TODO: 24/10/2015 what does this do?
+        mBroadcastReceiver = new MessageReciever();
         IntentFilter filter = new IntentFilter(MESSAGE_EVENT);
-        LocalBroadcastManager.getInstance(this).registerReceiver(messageReciever,filter);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mBroadcastReceiver,filter);
 
         navigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        title = getTitle();
+        mTitle = getTitle();
 
         // Set up the drawer.
         navigationDrawerFragment.setUp(R.id.navigation_drawer,
@@ -83,19 +84,19 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 
         fragmentManager.beginTransaction()
                 .replace(R.id.container, nextFragment)
-                .addToBackStack((String) title)
+                .addToBackStack((String) mTitle)
                 .commit();
     }
 
     public void setTitle(int titleId) {
-        title = getString(titleId);
+        mTitle = getString(titleId);
     }
 
     public void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(title);
+        actionBar.setTitle(mTitle);
     }
 
 
@@ -129,7 +130,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 
     @Override
     protected void onDestroy() {
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(messageReciever);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mBroadcastReceiver);
         super.onDestroy();
     }
 
