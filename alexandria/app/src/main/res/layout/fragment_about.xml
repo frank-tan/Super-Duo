@@ -1,9 +1,42 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="it.jaschke.alexandria.ui.AboutFragment">
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="it.jaschke.alexandria.ui.AboutFragment"
+    android:layout_marginLeft="@dimen/layout_margin_detail_view_horizontal"
+    android:layout_marginRight="@dimen/layout_margin_detail_view_horizontal"
+    android:layout_marginTop="@dimen/layout_margin_detail_view_vertical"
+    android:layout_marginBottom="@dimen/layout_margin_detail_view_vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/about_text" />
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_margin_detail_view_vertical"
+        android:layout_marginBottom="@dimen/layout_margin_detail_view_vertical"
+        android:elevation="2dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/layout_margin_detail_view_vertical"
+            android:layout_marginRight="@dimen/layout_margin_detail_view_vertical"
+            android:layout_marginTop="@dimen/layout_margin_detail_view_vertical"
+            android:layout_marginBottom="@dimen/layout_margin_detail_view_vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_launcher"
+                android:layout_marginRight="@dimen/layout_margin_detail_view_vertical"/>
+
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="@string/about_text"
+                />
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
 
 </FrameLayout>
