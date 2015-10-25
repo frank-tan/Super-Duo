@@ -1,8 +1,18 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="alexandria" parent="Theme.AppCompat.Light.NoActionBar" >
+        <item name="colorPrimary">@color/primary_material_light_1</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+    </style>
+
+    <style name="popup_theme" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="android:colorBackground">@color/primary_material_light_1</item>
+        <item name="android:textColor">@color/primary_material_light_1</item>
     </style>
 
 </resources>

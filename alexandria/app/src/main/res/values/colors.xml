@@ -2,4 +2,7 @@
 <resources>
     <color name="white">#FFFFFF</color>
     <color name="grey">#cccccc</color>
+    <color name="primary_material_light_1">#009688</color>
+    <color name="primary_dark_material_light">#00695c</color>
+    <color name="accent_material_light">#ff5252</color>
 </resources>

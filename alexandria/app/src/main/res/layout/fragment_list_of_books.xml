@@ -1,6 +1,11 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="it.jaschke.alexandria.ui.ListOfBooksFragment">
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StartupActivity">
 
     <RelativeLayout
         android:orientation="vertical"
@@ -33,7 +38,6 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"/>
 
-
         <ListView android:id="@+id/listOfBooks"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
@@ -45,8 +49,20 @@
                   android:layout_alignParentStart="true"
                   android:layout_toRightOf="@id/searchButton"/>
 
-
-
     </RelativeLayout>
 
-</FrameLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        app:fabSize="normal"
+        android:layout_margin="16dp"
+        android:clickable="true"
+        app:elevation="6dp"
+        app:pressedTranslationZ="12dp"
+        app:layout_anchor="@id/listOfBooks"
+        app:layout_anchorGravity="bottom|right|end"/>
+
+</android.support.design.widget.CoordinatorLayout>
+
