@@ -5,11 +5,11 @@
     <!-- Menu Items -->
     <string name="books">List of Books</string>
     <string name="scan">Scan/Add a Book</string>
-    <string name="books_value">0</string>
-    <string name="scan_value">1</string>
+    <string name="books_value" translatable="false">0</string>
+    <string name="scan_value" translatable="false">1</string>
     <string name="about">About this App</string>
 
-    <string name="navigation_drawer_open" >Open navigation drawer</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
     <string name="scan_button">Scan</string>
@@ -21,7 +21,7 @@
     <string name="not_found">No Book found</string>
     <string name="search">Search</string>
     <string name="delete">Delete Book</string>
-    <string name="pref_startScreen">Start Screen</string>
+    <string name="pref_startScreen">start_screen</string>
     <string name="title_activity_settings">Settings</string>
     <string name="action_share">Share</string>
     <string name="back_button">go back</string>
@@ -33,4 +33,5 @@
 
     <string name="scan_cancelled">Scan Cancelled</string>
     <string name="network_unavailable">Network Unavailable</string>
+    <string name="pref_startScreen_title">Start Screen</string>
 </resources>

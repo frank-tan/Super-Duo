@@ -8,7 +8,7 @@
 
     <ListPreference
         android:key="@string/pref_startScreen"
-        android:title="@string/pref_startScreen"
+        android:title="@string/pref_startScreen_title"
         android:defaultValue="@string/books_value"
         android:entries="@array/pref_start_options"
         android:entryValues="@array/pref_start_values"

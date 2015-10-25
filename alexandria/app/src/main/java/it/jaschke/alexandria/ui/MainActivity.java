@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import it.jaschke.alexandria.R;
 import it.jaschke.alexandria.api.Callback;
+import it.jaschke.alexandria.util.Utilities;
 
 
 public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks, Callback {
@@ -53,7 +54,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         setSupportActionBar(toolbar);
 
         // // TODO: 24/10/2015 what does this do?
-        mBroadcastReceiver = new MessageReciever();
+        mBroadcastReceiver = new MessageReceiver();
         IntentFilter filter = new IntentFilter(MESSAGE_EVENT);
         LocalBroadcastManager.getInstance(this).registerReceiver(mBroadcastReceiver,filter);
 
@@ -64,6 +65,9 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         // Set up the drawer.
         navigationDrawerFragment.setUp(R.id.navigation_drawer,
                     (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        // Open the page stored in user preference
+        navigationDrawerFragment.selectItem(Integer.parseInt(Utilities.getStringPreference(this,getString(R.string.pref_startScreen),"0")));
     }
 
     @Override
@@ -157,7 +161,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 
     }
 
-    private class MessageReciever extends BroadcastReceiver {
+    private class MessageReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             if(intent.getStringExtra(MESSAGE_KEY)!=null){
