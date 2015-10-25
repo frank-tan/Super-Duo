@@ -23,7 +23,7 @@ import it.jaschke.alexandria.api.Callback;
 import it.jaschke.alexandria.util.Utilities;
 
 
-public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks, Callback {
+public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks, Callback, NavigationDrawerController {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -67,7 +67,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
                     (DrawerLayout) findViewById(R.id.drawer_layout));
 
         // Open the page stored in user preference
-        navigationDrawerFragment.selectItem(Integer.parseInt(Utilities.getStringPreference(this,getString(R.string.pref_startScreen),"0")));
+        navigationDrawerFragment.selectItem(Integer.parseInt(Utilities.getStringPreference(this, getString(R.string.pref_startScreen),"0")));
     }
 
     @Override
@@ -188,5 +188,10 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         super.onBackPressed();
     }
 
-
+    @Override
+    public void setActiveDrawerItem(int position) {
+        if(navigationDrawerFragment != null) {
+            navigationDrawerFragment.selectItem(position);
+        }
+    }
 }

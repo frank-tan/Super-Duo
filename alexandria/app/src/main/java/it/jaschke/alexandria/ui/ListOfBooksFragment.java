@@ -1,8 +1,10 @@
 package it.jaschke.alexandria.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -27,6 +29,7 @@ public class ListOfBooksFragment extends Fragment implements LoaderManager.Loade
     private int position = ListView.INVALID_POSITION;
     private EditText searchText;
     private Cursor mCursor;
+    private FloatingActionButton mFloatingActionButton;
 
     private static final int LOADER_ID = 10;
 
@@ -71,8 +74,20 @@ public class ListOfBooksFragment extends Fragment implements LoaderManager.Loade
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Cursor cursor = bookListAdapter.getCursor();
                 if (cursor != null && cursor.moveToPosition(position)) {
-                    ((Callback)getActivity())
+                    ((Callback) getActivity())
                             .onItemSelected(cursor.getString(cursor.getColumnIndex(AlexandriaContract.BookEntry._ID)));
+                }
+            }
+        });
+
+        mFloatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.fab_add);
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Activity activity = getActivity();
+                if (activity instanceof NavigationDrawerController) {
+                    NavigationDrawerController navigationDrawerController = (NavigationDrawerController) activity;
+                    navigationDrawerController.setActiveDrawerItem(1);
                 }
             }
         });
@@ -135,8 +150,9 @@ public class ListOfBooksFragment extends Fragment implements LoaderManager.Loade
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        activity.setTitle(R.string.books);
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        getActivity().setTitle(R.string.books);
     }
+
 }
