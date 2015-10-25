@@ -17,8 +17,9 @@
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
             android:background="@color/primary_material_light_1"
+            android:elevation="4dp"
             app:theme="@style/alexandria"
-            android:popupTheme="@style/popup_theme"
+            app:popupTheme="@style/alexandriaPopup"
             />
 
         <!-- As the main content view, the view below consumes the entire
