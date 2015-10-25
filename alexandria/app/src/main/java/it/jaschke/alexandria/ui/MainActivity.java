@@ -35,10 +35,13 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
      */
     private CharSequence mTitle;
     public static boolean mIsTablet = false;
+    private int mActiveScreenIndex = 0;
     private BroadcastReceiver mBroadcastReceiver;
 
     public static final String MESSAGE_EVENT = "MESSAGE_EVENT";
     public static final String MESSAGE_KEY = "MESSAGE_EXTRA";
+
+    private static final String ACTIVE_SCREEN = "ACTIVE_SCREEN";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +69,23 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         navigationDrawerFragment.setUp(R.id.navigation_drawer,
                     (DrawerLayout) findViewById(R.id.drawer_layout));
 
+        // restore last active screen if available
+        if(savedInstanceState != null) {
+            int lastActiveScreen = savedInstanceState.getInt(ACTIVE_SCREEN, -1);
+            if(lastActiveScreen != -1) {
+                navigationDrawerFragment.selectItem(lastActiveScreen);
+                return;
+            }
+        }
+
         // Open the page stored in user preference
         navigationDrawerFragment.selectItem(Integer.parseInt(Utilities.getStringPreference(this, getString(R.string.pref_startScreen),"0")));
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(ACTIVE_SCREEN,mActiveScreenIndex);
     }
 
     @Override
@@ -75,6 +93,8 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment nextFragment;
+
+        mActiveScreenIndex = position;
 
         switch (position){
             default:
