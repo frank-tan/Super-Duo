@@ -72,14 +72,15 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         // restore last active screen if available
         if(savedInstanceState != null) {
             int lastActiveScreen = savedInstanceState.getInt(ACTIVE_SCREEN, -1);
+            // if the last screen is recorded, let the system handle the restoration
             if(lastActiveScreen != -1) {
-                navigationDrawerFragment.selectItem(lastActiveScreen);
+                mActiveScreenIndex = lastActiveScreen;
                 return;
             }
         }
 
-        // Open the page stored in user preference
-        navigationDrawerFragment.selectItem(Integer.parseInt(Utilities.getStringPreference(this, getString(R.string.pref_startScreen),"0")));
+        // if the last screen is not recorded, open the page stored in user preference
+        navigationDrawerFragment.selectItem(Integer.parseInt(Utilities.getStringPreference(this, getString(R.string.pref_startScreen), "0")));
     }
 
     @Override
@@ -164,6 +165,8 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 
     @Override
     public void onItemSelected(String ean) {
+        mActiveScreenIndex = 3;
+
         Bundle args = new Bundle();
         args.putString(BookDetailFragment.EAN_KEY, ean);
 
