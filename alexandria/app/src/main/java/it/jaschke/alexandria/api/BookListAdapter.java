@@ -10,9 +10,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
+
 import it.jaschke.alexandria.R;
 import it.jaschke.alexandria.data.AlexandriaContract;
-import it.jaschke.alexandria.services.DownloadImage;
+import it.jaschke.alexandria.util.Utilities;
 
 /**
  * Created by saj on 11/01/15.
@@ -37,12 +41,38 @@ public class BookListAdapter extends CursorAdapter {
     }
 
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
+    public void bindView(View view, final Context context, Cursor cursor) {
 
-        ViewHolder viewHolder = (ViewHolder) view.getTag();
+        final ViewHolder viewHolder = (ViewHolder) view.getTag();
 
-        String imgUrl = cursor.getString(cursor.getColumnIndex(AlexandriaContract.BookEntry.IMAGE_URL));
-        new DownloadImage(viewHolder.bookCover).execute(imgUrl);
+        final String imgUrl = cursor.getString(cursor.getColumnIndex(AlexandriaContract.BookEntry.IMAGE_URL));
+
+        // force picasso to load image from cache first. If failed, try loading from network.
+        Picasso.with(context)
+                .load(imgUrl)
+                .networkPolicy(NetworkPolicy.OFFLINE)
+                //.placeholder(R.drawable.backdrop_loading_placeholder)
+                //.error(R.drawable.backdrop_failed_placeholder)
+                .fit()
+                .centerCrop()
+                .into(viewHolder.bookCover, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                    }
+
+                    @Override
+                    public void onError() {
+                        if (Utilities.isNetworkAvailable(context)) {
+                            Picasso.with(context)
+                                    .load(imgUrl)
+                                    //.placeholder(R.drawable.backdrop_loading_placeholder)
+                                    //.error(R.drawable.backdrop_failed_placeholder)
+                                    .fit()
+                                    .centerCrop()
+                                    .into(viewHolder.bookCover);
+                        }
+                    }
+                });
 
         String bookTitle = cursor.getString(cursor.getColumnIndex(AlexandriaContract.BookEntry.TITLE));
         viewHolder.bookTitle.setText(bookTitle);
