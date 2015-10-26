@@ -18,7 +18,7 @@ import android.widget.ListView;
 
 import it.jaschke.alexandria.R;
 import it.jaschke.alexandria.api.BookListAdapter;
-import it.jaschke.alexandria.api.Callback;
+import it.jaschke.alexandria.api.BookListItemCallback;
 import it.jaschke.alexandria.data.AlexandriaContract;
 
 
@@ -74,7 +74,7 @@ public class ListOfBooksFragment extends Fragment implements LoaderManager.Loade
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Cursor cursor = bookListAdapter.getCursor();
                 if (cursor != null && cursor.moveToPosition(position)) {
-                    ((Callback) getActivity())
+                    ((BookListItemCallback) getActivity())
                             .onItemSelected(cursor.getString(cursor.getColumnIndex(AlexandriaContract.BookEntry._ID)));
                 }
             }

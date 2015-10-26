@@ -19,11 +19,11 @@ import android.view.View;
 import android.widget.Toast;
 
 import it.jaschke.alexandria.R;
-import it.jaschke.alexandria.api.Callback;
+import it.jaschke.alexandria.api.BookListItemCallback;
 import it.jaschke.alexandria.util.Utilities;
 
 
-public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks, Callback, NavigationDrawerController {
+public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks, BookListItemCallback, NavigationDrawerController {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
