@@ -1,5 +1,6 @@
 package it.jaschke.alexandria.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -18,10 +19,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
+
 import it.jaschke.alexandria.R;
 import it.jaschke.alexandria.data.AlexandriaContract;
 import it.jaschke.alexandria.services.BookService;
-import it.jaschke.alexandria.services.DownloadImage;
+import it.jaschke.alexandria.util.Utilities;
 
 
 public class BookDetailFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -115,18 +120,42 @@ public class BookDetailFragment extends Fragment implements LoaderManager.Loader
             ((TextView) rootView.findViewById(R.id.authors)).setLines(authorsArr.length);
             ((TextView) rootView.findViewById(R.id.authors)).setText(authors.replace(",", "\n"));
         }
-        String imgUrl = data.getString(data.getColumnIndex(AlexandriaContract.BookEntry.IMAGE_URL));
+        final String imgUrl = data.getString(data.getColumnIndex(AlexandriaContract.BookEntry.IMAGE_URL));
         if(Patterns.WEB_URL.matcher(imgUrl).matches()){
-            new DownloadImage((ImageView) rootView.findViewById(R.id.fullBookCover)).execute(imgUrl);
+
+            final Context context = getActivity();
+            final ImageView imageView = (ImageView) rootView.findViewById(R.id.fullBookCover);
+            // force picasso to load image from cache first. If failed, try loading from network.
+            Picasso.with(context)
+                    .load(imgUrl)
+                    .networkPolicy(NetworkPolicy.OFFLINE)
+                            //.placeholder(R.drawable.backdrop_loading_placeholder)
+                            //.error(R.drawable.backdrop_failed_placeholder)
+                    .fit()
+                    .centerCrop()
+                    .into(imageView, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                        }
+
+                        @Override
+                        public void onError() {
+                            if (Utilities.isNetworkAvailable(context)) {
+                                Picasso.with(context)
+                                        .load(imgUrl)
+                                                //.placeholder(R.drawable.backdrop_loading_placeholder)
+                                                //.error(R.drawable.backdrop_failed_placeholder)
+                                        .fit()
+                                        .centerCrop()
+                                        .into(imageView);
+                            }
+                        }
+                    });
             rootView.findViewById(R.id.fullBookCover).setVisibility(View.VISIBLE);
         }
 
         String categories = data.getString(data.getColumnIndex(AlexandriaContract.CategoryEntry.CATEGORY));
         ((TextView) rootView.findViewById(R.id.categories)).setText(categories);
-
-        if(rootView.findViewById(R.id.right_container)!=null){
-            rootView.findViewById(R.id.backButton).setVisibility(View.INVISIBLE);
-        }
 
     }
 

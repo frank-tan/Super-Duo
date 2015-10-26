@@ -1,6 +1,7 @@
 package it.jaschke.alexandria.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -20,11 +21,13 @@ import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import it.jaschke.alexandria.R;
 import it.jaschke.alexandria.data.AlexandriaContract;
 import it.jaschke.alexandria.services.BookService;
-import it.jaschke.alexandria.services.DownloadImage;
 import it.jaschke.alexandria.util.Utilities;
 
 
@@ -172,9 +175,38 @@ public class AddBookFragment extends Fragment implements LoaderManager.LoaderCal
             ((TextView) rootView.findViewById(R.id.authors)).setText(authors.replace(",", "\n"));
         }
 
-        String imgUrl = data.getString(data.getColumnIndex(AlexandriaContract.BookEntry.IMAGE_URL));
+        final String imgUrl = data.getString(data.getColumnIndex(AlexandriaContract.BookEntry.IMAGE_URL));
         if(Patterns.WEB_URL.matcher(imgUrl).matches()){
-            new DownloadImage((ImageView) rootView.findViewById(R.id.bookCover)).execute(imgUrl);
+
+            final Context context = getActivity();
+            final ImageView imageView = (ImageView) rootView.findViewById(R.id.bookCover);
+
+            // force picasso to load image from cache first. If failed, try loading from network.
+            Picasso.with(context)
+                    .load(imgUrl)
+                    .networkPolicy(NetworkPolicy.OFFLINE)
+                            //.placeholder(R.drawable.backdrop_loading_placeholder)
+                            //.error(R.drawable.backdrop_failed_placeholder)
+                    .fit()
+                    .centerCrop()
+                    .into(imageView, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                        }
+
+                        @Override
+                        public void onError() {
+                            if (Utilities.isNetworkAvailable(context)) {
+                                Picasso.with(context)
+                                        .load(imgUrl)
+                                                //.placeholder(R.drawable.backdrop_loading_placeholder)
+                                                //.error(R.drawable.backdrop_failed_placeholder)
+                                        .fit()
+                                        .centerCrop()
+                                        .into(imageView);
+                            }
+                        }
+                    });
             rootView.findViewById(R.id.bookCover).setVisibility(View.VISIBLE);
         }
 
