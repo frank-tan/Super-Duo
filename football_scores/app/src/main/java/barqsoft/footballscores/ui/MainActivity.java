@@ -3,7 +3,6 @@ package barqsoft.footballscores.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -11,23 +10,31 @@ import barqsoft.footballscores.R;
 
 public class MainActivity extends AppCompatActivity
 {
-    public static int selected_match_id;
-    public static int current_fragment = 2;
-    public static String LOG_TAG = "MainActivity";
-    private final String save_tag = "Save Test";
-    private PagerFragment my_main;
+    private PagerFragment mPagerFragment;
+    private static String PAGER_FRAGMENT_TAG = "PAGER_FRAGMENT_TAG";
+
+    private static String LOG_TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
-        Log.d(LOG_TAG, "Reached MainActivity onCreate");
-        if (savedInstanceState == null) {
-            my_main = new PagerFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, my_main)
-                    .commit();
+
+        if (savedInstanceState != null) {
+            // restore the previous state
+            mPagerFragment = (PagerFragment) getSupportFragmentManager().getFragment(savedInstanceState, PAGER_FRAGMENT_TAG);
         }
+
+        // create pager fragment if it is null
+        if(mPagerFragment == null) {
+            mPagerFragment = new PagerFragment();
+        }
+
+        // add pager fragment
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, mPagerFragment)
+                .commit();
     }
 
 
@@ -48,8 +55,8 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_about)
         {
-            Intent start_about = new Intent(this,AboutActivity.class);
-            startActivity(start_about);
+            Intent aboutIntent = new Intent(this,AboutActivity.class);
+            startActivity(aboutIntent);
             return true;
         }
 
@@ -59,24 +66,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onSaveInstanceState(Bundle outState)
     {
-        Log.v(save_tag,"will save");
-        Log.v(save_tag,"fragment: "+String.valueOf(my_main.mPagerHandler.getCurrentItem()));
-        Log.v(save_tag,"selected id: "+selected_match_id);
-        outState.putInt("Pager_Current",my_main.mPagerHandler.getCurrentItem());
-        outState.putInt("Selected_match",selected_match_id);
-        getSupportFragmentManager().putFragment(outState,"my_main",my_main);
         super.onSaveInstanceState(outState);
+
+        getSupportFragmentManager().putFragment(outState, PAGER_FRAGMENT_TAG, mPagerFragment);
     }
 
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState)
-    {
-        Log.v(save_tag,"will retrive");
-        Log.v(save_tag,"fragment: "+String.valueOf(savedInstanceState.getInt("Pager_Current")));
-        Log.v(save_tag,"selected id: "+savedInstanceState.getInt("Selected_match"));
-        current_fragment = savedInstanceState.getInt("Pager_Current");
-        selected_match_id = savedInstanceState.getInt("Selected_match");
-        my_main = (PagerFragment) getSupportFragmentManager().getFragment(savedInstanceState,"my_main");
-        super.onRestoreInstanceState(savedInstanceState);
-    }
 }
