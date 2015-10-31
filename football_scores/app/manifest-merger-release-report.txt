@@ -31,7 +31,7 @@ MERGED from com.android.support:support-v4:21.0.3:16:5
 		ADDED from AndroidManifest.xml:11:9
 	android:theme
 		ADDED from AndroidManifest.xml:13:9
-activity#barqsoft.footballscores.MainActivity
+activity#barqsoft.footballscores.ui.MainActivity
 ADDED from AndroidManifest.xml:14:9
 	android:label
 		ADDED from AndroidManifest.xml:16:13
@@ -47,13 +47,13 @@ category#android.intent.category.LAUNCHER
 ADDED from AndroidManifest.xml:20:17
 	android:name
 		ADDED from AndroidManifest.xml:20:27
-provider#barqsoft.footballscores.ScoresProvider
+provider#barqsoft.footballscores.data.ScoresProvider
 ADDED from AndroidManifest.xml:24:9
 	android:authorities
 		ADDED from AndroidManifest.xml:26:13
 	android:name
 		ADDED from AndroidManifest.xml:25:13
-activity#barqsoft.footballscores.AboutActivity
+activity#barqsoft.footballscores.ui.AboutActivity
 ADDED from AndroidManifest.xml:28:9
 	android:label
 		ADDED from AndroidManifest.xml:30:13

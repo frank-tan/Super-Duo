@@ -1,4 +1,4 @@
-package barqsoft.footballscores;
+package barqsoft.footballscores.ui;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -13,6 +13,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import barqsoft.footballscores.R;
+import barqsoft.footballscores.adapter.ViewHolder;
+import barqsoft.footballscores.data.DatabaseContract;
+import barqsoft.footballscores.adapter.scoresAdapter;
 import barqsoft.footballscores.service.myFetchService;
 
 /**
@@ -65,7 +69,7 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle)
     {
-        return new CursorLoader(getActivity(),DatabaseContract.scores_table.buildScoreWithDate(),
+        return new CursorLoader(getActivity(), DatabaseContract.scores_table.buildScoreWithDate(),
                 null,null,fragmentdate,null);
     }
 
