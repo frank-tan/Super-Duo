@@ -3,6 +3,7 @@ package barqsoft.footballscores.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -22,19 +23,27 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         if (savedInstanceState != null) {
+            Log.v(LOG_TAG,"savedInstanceState is not null");
             // restore the previous state
             mPagerFragment = (PagerFragment) getSupportFragmentManager().getFragment(savedInstanceState, PAGER_FRAGMENT_TAG);
+            if(mPagerFragment != null) {
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.container, mPagerFragment, PAGER_FRAGMENT_TAG)
+                        .commit();
+            }
         }
 
         // create pager fragment if it is null
-        if(mPagerFragment == null) {
+        if(savedInstanceState == null) {
+            Log.v(LOG_TAG,"fragment is null");
             mPagerFragment = new PagerFragment();
-        }
 
-        // add pager fragment
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, mPagerFragment)
-                .commit();
+            // add pager fragment
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, mPagerFragment, PAGER_FRAGMENT_TAG)
+                    .commit();
+        }
     }
 
 

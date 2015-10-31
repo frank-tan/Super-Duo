@@ -246,15 +246,6 @@ public class myFetchService extends IntentService
                     match_values.put(DatabaseContract.scores_table.AWAY_GOALS_COL,Away_goals);
                     match_values.put(DatabaseContract.scores_table.LEAGUE_COL,League);
                     match_values.put(DatabaseContract.scores_table.MATCH_DAY,match_day);
-                    //log spam
-
-                    //Log.v(LOG_TAG,match_id);
-                    //Log.v(LOG_TAG,mDate);
-                    //Log.v(LOG_TAG,mTime);
-                    //Log.v(LOG_TAG,Home);
-                    //Log.v(LOG_TAG,Away);
-                    //Log.v(LOG_TAG,Home_goals);
-                    //Log.v(LOG_TAG,Away_goals);
 
                     values.add(match_values);
                 }

@@ -10,6 +10,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        resValue "string", "api_key", System.getenv("FOOTBALL_DATA_API_KEY")
     }
     buildTypes {
         release {
