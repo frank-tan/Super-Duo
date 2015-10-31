@@ -39,20 +39,24 @@ public class MatchListFragment extends Fragment implements LoaderManager.LoaderC
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             final Bundle savedInstanceState) {
-        // TODO: 31/10/2015 should not do update here
-        update_scores();
-        getLoaderManager().initLoader(SCORES_LOADER, null, this);
-
-        View rootView = inflater.inflate(R.layout.fragment_match_list, container, false);
-        final ListView score_list = (ListView) rootView.findViewById(R.id.scores_list);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
         if(savedInstanceState != null) {
             mSelectedMatchId = savedInstanceState.getInt(SELECTED_MATCH_ID_TAG);
             mFragmentDate = savedInstanceState.getString(FRAGMENT_DATE_TAG);
         }
         Log.v("MatchListFragment", "mFragmentDate is " + mFragmentDate);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             final Bundle savedInstanceState) {
+        // TODO: 31/10/2015 should not do update here
+        update_scores();
+
+        View rootView = inflater.inflate(R.layout.fragment_match_list, container, false);
+        final ListView score_list = (ListView) rootView.findViewById(R.id.scores_list);
 
         mAdapter = new ScoresAdapter(getActivity(),null,0);
         mAdapter.setDetailMatchId(mSelectedMatchId);
@@ -69,6 +73,8 @@ public class MatchListFragment extends Fragment implements LoaderManager.LoaderC
                 mAdapter.notifyDataSetChanged();
             }
         });
+        getLoaderManager().initLoader(SCORES_LOADER, null, this);
+
         return rootView;
     }
 
