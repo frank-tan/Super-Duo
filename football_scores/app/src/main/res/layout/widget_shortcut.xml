@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:id="@+id/shortcut_frame"
+    android:padding="@dimen/widget_margin">
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/ic_launcher"
+        android:id="@+id/shortcut_icon"
+        android:contentDescription="@string/launcher_icon"
+        android:layout_gravity="center" />
+</FrameLayout>

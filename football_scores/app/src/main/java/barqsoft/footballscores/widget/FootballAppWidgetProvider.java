@@ -24,17 +24,13 @@ public class FootballAppWidgetProvider extends AppWidgetProvider {
 
             // Get the layout for the App Widget and attach an on-click listener
             // to the button
-            RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.scores_list_item);
-            views.setTextViewText(R.id.home_name,"Frank");
-            views.setTextViewText(R.id.away_name,"Ariel");
-            views.setImageViewResource(R.id.home_crest, R.drawable.ic_launcher);
-            views.setImageViewResource(R.id.away_crest,R.drawable.ic_launcher);
+            RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_shortcut);
 
             // Create an Intent to launch ExampleActivity
             Intent intent = new Intent(context, MainActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
-            views.setOnClickPendingIntent(R.id.widget, pendingIntent);
+            views.setOnClickPendingIntent(R.id.shortcut_frame, pendingIntent);
 
             // Tell the AppWidgetManager to perform an update on the current app widget
             appWidgetManager.updateAppWidget(appWidgetId, views);
