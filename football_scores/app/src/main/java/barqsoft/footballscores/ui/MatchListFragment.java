@@ -62,6 +62,7 @@ public class MatchListFragment extends Fragment implements LoaderManager.LoaderC
         mAdapter.setDetailMatchId(mSelectedMatchId);
 
         score_list.setAdapter(mAdapter);
+        score_list.setEmptyView(rootView.findViewById(R.id.empty_view));
 
         score_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

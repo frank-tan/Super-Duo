@@ -22,7 +22,11 @@
 
         <provider
             android:name=".data.ScoresProvider"
-            android:authorities="barqsoft.footballscores" />
+            android:authorities="barqsoft.footballscores"
+            android:exported="true"
+            android:enabled="true"
+            android:grantUriPermissions="true"
+            />
 
         <activity
             android:name=".ui.AboutActivity"
@@ -35,12 +39,24 @@
 
         <service android:name=".service.myFetchService" />
 
+        <service android:name=".widget.WidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"
+            android:exported="false" />
+
         <receiver android:name=".widget.FootballAppWidgetProvider" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/football_appwidget_info" />
+        </receiver>
+
+        <receiver android:name=".widget.FootballAppCollectionWidgetProvider" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/football_collection_appwidget_info" />
         </receiver>
 
     </application>
