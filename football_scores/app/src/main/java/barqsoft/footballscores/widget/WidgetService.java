@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import barqsoft.footballscores.R;
+import barqsoft.footballscores.Utilies;
 import barqsoft.footballscores.data.DatabaseContract;
 
 /**
@@ -28,6 +29,16 @@ class ScoreListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFacto
     private Context mContext;
     private Cursor mCursor;
     private int mAppWidgetId;
+
+    private static final int COL_HOME = 3;
+    private static final int COL_AWAY = 4;
+    private static final int COL_HOME_GOALS = 6;
+    private static final int COL_AWAY_GOALS = 7;
+    private static final int COL_DATE = 1;
+    private static final int COL_LEAGUE = 5;
+    private static final int COL_MATCHDAY = 9;
+    private static final int COL_ID = 8;
+    private static final int COL_MATCHTIME = 2;
 
     public ScoreListRemoteViewsFactory(Context context, Intent intent) {
         mContext = context;
@@ -74,30 +85,26 @@ class ScoreListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFacto
     @Override
     public RemoteViews getViewAt(int position) {
         // Get the data for this position from the content provider
-//        String city = "Unknown City";
-//        int temp = 0;
-//        if (mCursor.moveToPosition(position)) {
-//            final int cityColIndex = mCursor.getColumnIndex(WeatherDataProvider.Columns.CITY);
-//            final int tempColIndex = mCursor.getColumnIndex(
-//                    WeatherDataProvider.Columns.TEMPERATURE);
-//            city = mCursor.getString(cityColIndex);
-//            temp = mCursor.getInt(tempColIndex);
-//        }
 
-        // Return a proper item with the proper city and temperature.  Just for fun, we alternate
-        // the items to make the list easier to read.
+        if (mCursor.moveToPosition(position)) {
+            RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.scores_list_item);
+            rv.setTextViewText(R.id.home_name,mCursor.getString(COL_HOME));
+            rv.setTextViewText(R.id.away_name,mCursor.getString(COL_AWAY));
+            rv.setTextViewText(R.id.data_textview,mCursor.getString(COL_MATCHTIME));
+            rv.setTextViewText(R.id.score_textview, Utilies.getScores(mCursor.getInt(COL_HOME_GOALS), mCursor.getInt(COL_AWAY_GOALS)));
+            rv.setImageViewResource(R.id.home_crest, Utilies.getTeamCrestByTeamName(
+                    mCursor.getString(COL_HOME)));
+            rv.setImageViewResource(R.id.away_crest, Utilies.getTeamCrestByTeamName(
+                    mCursor.getString(COL_AWAY)));
 
-        RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.scores_list_item);
-        rv.setTextViewText(R.id.home_name,"Frank");
-        rv.setTextViewText(R.id.away_name,"Ariel");
-        rv.setImageViewResource(R.id.home_crest, R.drawable.ic_launcher);
-        rv.setImageViewResource(R.id.away_crest, R.drawable.ic_launcher);
+            // Set the click intent so that we can handle it and show a toast message
+            final Intent fillInIntent = new Intent();
+            rv.setOnClickFillInIntent(R.id.widget, fillInIntent);
 
-        // Set the click intent so that we can handle it and show a toast message
-        final Intent fillInIntent = new Intent();
-        rv.setOnClickFillInIntent(R.id.widget, fillInIntent);
+            return rv;
+        }
 
-        return rv;
+        return null;
     }
 
     @Override

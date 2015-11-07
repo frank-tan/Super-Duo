@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.widget.RemoteViews;
@@ -92,17 +93,28 @@ public class FootballAppCollectionWidgetProvider extends AppWidgetProvider {
             // Bind a click listener template for the contents of the weather list.  Note that we
             // need to update the intent's data if we set an extra, since the extras will be
             // ignored otherwise.
-            final Intent onClickIntent = new Intent(context, FootballAppCollectionWidgetProvider.class);
-            onClickIntent.setAction(FootballAppCollectionWidgetProvider.CLICK_ACTION);
-            onClickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
-            onClickIntent.setData(Uri.parse(onClickIntent.toUri(Intent.URI_INTENT_SCHEME)));
-            final PendingIntent onClickPendingIntent = PendingIntent.getBroadcast(context, 0,
-                    onClickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            rv.setPendingIntentTemplate(R.id.scores_list, onClickPendingIntent);
+            final Intent onClickIntentTemplate = new Intent(context, FootballAppCollectionWidgetProvider.class);
+            onClickIntentTemplate.setAction(FootballAppCollectionWidgetProvider.CLICK_ACTION);
+            onClickIntentTemplate.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
+            onClickIntentTemplate.setData(Uri.parse(onClickIntentTemplate.toUri(Intent.URI_INTENT_SCHEME)));
+            final PendingIntent onClickPendingIntentTemplate = PendingIntent.getBroadcast(context, 0,
+                    onClickIntentTemplate, PendingIntent.FLAG_UPDATE_CURRENT);
+            rv.setPendingIntentTemplate(R.id.scores_list, onClickPendingIntentTemplate);
+
+            // Create an Intent to launch ExampleActivity
+            Intent onClickIntent = new Intent(context, MainActivity.class);
+            PendingIntent onClickPendingIntent = PendingIntent.getActivity(context, 0, onClickIntent, 0);
+
+            rv.setOnClickPendingIntent(R.id.widget_title, onClickPendingIntent);
 
             appWidgetManager.updateAppWidget(appWidgetIds[i], rv);
         }
         super.onUpdate(context, appWidgetManager, appWidgetIds);
+    }
+
+    @Override
+    public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
+        super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
     }
 }
 
