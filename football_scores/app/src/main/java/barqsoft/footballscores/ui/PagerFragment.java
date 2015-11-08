@@ -27,7 +27,6 @@ public class PagerFragment extends Fragment
     private static String CURRENT_FRAGMENT_ID_TAG = "PAGER_CURRENT_FRAGMENT_TAG";
 
     private ViewPager mViewPager;
-    private TabPagerAdapter mPagerAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
@@ -39,7 +38,7 @@ public class PagerFragment extends Fragment
             mCurrentFragmentId = savedInstanceState.getInt(CURRENT_FRAGMENT_ID_TAG);
         }
 
-        mPagerAdapter = new TabPagerAdapter(getChildFragmentManager());
+        TabPagerAdapter mPagerAdapter = new TabPagerAdapter(getChildFragmentManager());
 
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.setCurrentItem(mCurrentFragmentId);

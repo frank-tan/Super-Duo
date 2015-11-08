@@ -38,4 +38,6 @@
     <string name="today_match">Today\'s Match</string>
     <string name="launcher_icon">Football Score app launcher icon</string>
     <string name="app_launcher">App Launcher</string>
+    <string name="home_crest_desc">Home team crest image</string>
+    <string name="guest_crest_desc">Guest team crest image</string>
 </resources>

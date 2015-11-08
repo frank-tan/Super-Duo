@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import barqsoft.footballscores.R;
-import barqsoft.footballscores.Utilies;
+import barqsoft.footballscores.Utilities;
 import barqsoft.footballscores.data.DatabaseContract;
 
 /**
@@ -91,10 +91,10 @@ class ScoreListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFacto
             rv.setTextViewText(R.id.home_name,mCursor.getString(COL_HOME));
             rv.setTextViewText(R.id.away_name,mCursor.getString(COL_AWAY));
             rv.setTextViewText(R.id.data_textview,mCursor.getString(COL_MATCHTIME));
-            rv.setTextViewText(R.id.score_textview, Utilies.getScores(mCursor.getInt(COL_HOME_GOALS), mCursor.getInt(COL_AWAY_GOALS)));
-            rv.setImageViewResource(R.id.home_crest, Utilies.getTeamCrestByTeamName(
+            rv.setTextViewText(R.id.score_textview, Utilities.getScores(mCursor.getInt(COL_HOME_GOALS), mCursor.getInt(COL_AWAY_GOALS)));
+            rv.setImageViewResource(R.id.home_crest, Utilities.getTeamCrestByTeamName(
                     mCursor.getString(COL_HOME)));
-            rv.setImageViewResource(R.id.away_crest, Utilies.getTeamCrestByTeamName(
+            rv.setImageViewResource(R.id.away_crest, Utilities.getTeamCrestByTeamName(
                     mCursor.getString(COL_AWAY)));
 
             // Set the click intent so that we can handle it and show a toast message

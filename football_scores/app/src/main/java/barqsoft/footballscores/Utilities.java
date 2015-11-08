@@ -3,7 +3,7 @@ package barqsoft.footballscores;
 /**
  * Created by yehya khaled on 3/3/2015.
  */
-public class Utilies
+public class Utilities
 {
     public static final int SERIE_A = 357;
     public static final int PREMIER_LEGAUE = 354;
@@ -72,15 +72,25 @@ public class Utilies
         { //This is the set of icons that are currently in the app. Feel free to find and add more
             //as you go.
             case "Arsenal London FC" : return R.drawable.arsenal;
+            case "Aston Villa FC": return R.drawable.aston_villa;
+            case "Burnley FC": return R.drawable.burney_fc_hd_logo;
+            case "Chelsea FC": return R.drawable.chelsea;
+            case "Crystal Palace FC": return R.drawable.crystal_palace_fc;
+            case "Hull City AFC": return R.drawable.hull_city_afc_hd_logo;
             case "Manchester United FC" : return R.drawable.manchester_united;
             case "Swansea City" : return R.drawable.swansea_city_afc;
             case "Leicester City" : return R.drawable.leicester_city_fc_hd_logo;
+            case "Liverpool FC": return R.drawable.liverpool;
+            case "Manchester City FC": return R.drawable.manchester_city;
+            case "Newcastle United FC": return R.drawable.newcastle_united;
+            case "Queens Park Rangers FC": return R.drawable.queens_park_rangers_hd_logo;
             case "Everton FC" : return R.drawable.everton_fc_logo1;
             case "West Ham United FC" : return R.drawable.west_ham;
             case "Tottenham Hotspur FC" : return R.drawable.tottenham_hotspur;
             case "West Bromwich Albion" : return R.drawable.west_bromwich_albion_hd_logo;
             case "Sunderland AFC" : return R.drawable.sunderland;
             case "Stoke City FC" : return R.drawable.stoke_city;
+            case "Southampton FC": return R.drawable.southampton_fc;
             default: return R.drawable.ic_launcher;
         }
     }

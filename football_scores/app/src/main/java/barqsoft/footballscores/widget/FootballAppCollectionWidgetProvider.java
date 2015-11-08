@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.widget.RemoteViews;
@@ -24,15 +23,14 @@ import barqsoft.footballscores.ui.MainActivity;
  * Created by tan on 4/11/2015.
  */
 public class FootballAppCollectionWidgetProvider extends AppWidgetProvider {
-    public static String CLICK_ACTION = "barqsoft.footballscores.widget.LIST_CLICK";
+    private static String CLICK_ACTION = "barqsoft.footballscores.widget.LIST_CLICK";
 //    public static String REFRESH_ACTION = "barqsoft.footballscores.widget.LIST_REFRESH";
 
-    private static HandlerThread sWorkerThread;
     private static Handler sWorkerQueue;
     private static ScoreDataProviderObserver sDataObserver;
 
     public FootballAppCollectionWidgetProvider() {
-        sWorkerThread = new HandlerThread("FootballAppCollectionWidgetProvider-worker");
+        HandlerThread sWorkerThread = new HandlerThread("FootballAppCollectionWidgetProvider-worker");
         sWorkerThread.start();
         sWorkerQueue = new Handler(sWorkerThread.getLooper());
     }
@@ -112,10 +110,6 @@ public class FootballAppCollectionWidgetProvider extends AppWidgetProvider {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
 
-    @Override
-    public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
-        super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
-    }
 }
 
 class ScoreDataProviderObserver extends ContentObserver {
