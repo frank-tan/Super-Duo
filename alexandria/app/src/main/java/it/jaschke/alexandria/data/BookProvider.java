@@ -8,7 +8,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import android.util.Log;
 
 /**
  * Created by saj on 24/12/14.
@@ -25,7 +24,7 @@ public class BookProvider extends ContentProvider {
     private static final int CATEGORY = 301;
 
     private static final int BOOK_FULL = 500;
-    private static final int BOOK_FULLDETAIL = 501;
+    private static final int BOOK_FULL_DETAIL = 501;
 
     private static final UriMatcher uriMatcher = buildUriMatcher();
 
@@ -55,8 +54,8 @@ public class BookProvider extends ContentProvider {
         matcher.addURI(authority, AlexandriaContract.PATH_AUTHORS, AUTHOR);
         matcher.addURI(authority, AlexandriaContract.PATH_CATEGORIES, CATEGORY);
 
-        matcher.addURI(authority, AlexandriaContract.PATH_FULLBOOK +"/#", BOOK_FULLDETAIL);
-        matcher.addURI(authority, AlexandriaContract.PATH_FULLBOOK, BOOK_FULL);
+        matcher.addURI(authority, AlexandriaContract.PATH_FULL_BOOK +"/#", BOOK_FULL_DETAIL);
+        matcher.addURI(authority, AlexandriaContract.PATH_FULL_BOOK, BOOK_FULL);
 
         return matcher;
     }
@@ -138,7 +137,7 @@ public class BookProvider extends ContentProvider {
                         sortOrder
                 );
                 break;
-            case BOOK_FULLDETAIL:
+            case BOOK_FULL_DETAIL:
                 String[] bfd_projection ={
                     AlexandriaContract.BookEntry.TABLE_NAME + "." + AlexandriaContract.BookEntry.TITLE,
                     AlexandriaContract.BookEntry.TABLE_NAME + "." + AlexandriaContract.BookEntry.SUBTITLE,
@@ -186,7 +185,7 @@ public class BookProvider extends ContentProvider {
         final int match = uriMatcher.match(uri);
 
         switch (match) {
-            case BOOK_FULLDETAIL:
+            case BOOK_FULL_DETAIL:
                 return AlexandriaContract.BookEntry.CONTENT_ITEM_TYPE;
             case BOOK_ID:
                 return AlexandriaContract.BookEntry.CONTENT_ITEM_TYPE;
