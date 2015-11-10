@@ -12,8 +12,6 @@ import android.preference.PreferenceManager;
 public class Utilities {
     /**
      * Check if network is available
-     * @param context
-     * @return
      */
     public static boolean isNetworkAvailable (Context context) {
         ConnectivityManager cm =

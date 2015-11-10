@@ -280,7 +280,7 @@ public class BookProvider extends ContentProvider {
         // Because a null deletes all rows
         // check context not null
         Context context = getContext();
-        if (selection == null || rowsDeleted != 0 && context != null) {
+        if ((selection == null || rowsDeleted != 0) && context != null) {
             context.getContentResolver().notifyChange(uri, null);
         }
         return rowsDeleted;

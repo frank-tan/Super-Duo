@@ -28,7 +28,7 @@ public class ListOfBooksFragment extends Fragment implements LoaderManager.Loade
 
     private BookListAdapter bookListAdapter;
     private ListView bookList;
-    private int position = ListView.INVALID_POSITION;
+    private final int position = ListView.INVALID_POSITION;
     private EditText searchText;
     private Cursor mCursor;
     private FloatingActionButton mFloatingActionButton;
@@ -36,11 +36,6 @@ public class ListOfBooksFragment extends Fragment implements LoaderManager.Loade
     private static final int LOADER_ID = 10;
 
     public ListOfBooksFragment() {
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override

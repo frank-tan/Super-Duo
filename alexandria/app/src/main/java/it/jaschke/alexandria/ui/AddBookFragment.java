@@ -37,13 +37,6 @@ public class AddBookFragment extends Fragment implements LoaderManager.LoaderCal
     private static final int LOADER_ID = 1;
     private View rootView;
     private final String EAN_CONTENT="eanContent";
-    private static final String SCAN_FORMAT = "scanFormat";
-    private static final String SCAN_CONTENTS = "scanContents";
-
-    private String mScanFormat = "Format:";
-    private String mScanContents = "Contents:";
-
-
 
     public AddBookFragment(){
     }
@@ -240,9 +233,6 @@ public class AddBookFragment extends Fragment implements LoaderManager.LoaderCal
 
     /**
      * This is the callback for Barcode scan result
-     * @param requestCode
-     * @param resultCode
-     * @param data
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
