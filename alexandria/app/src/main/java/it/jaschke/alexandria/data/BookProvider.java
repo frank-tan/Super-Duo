@@ -3,6 +3,7 @@ package it.jaschke.alexandria.data;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -172,8 +173,11 @@ public class BookProvider extends ContentProvider {
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
-
-        retCursor.setNotificationUri(getContext().getContentResolver(), uri);
+        // check context not null
+        Context context = getContext();
+        if(context != null) {
+            retCursor.setNotificationUri(context.getContentResolver(), uri);
+        }
 
         return retCursor;
     }
@@ -217,7 +221,11 @@ public class BookProvider extends ContentProvider {
                 } else {
                     throw new android.database.SQLException("Failed to insert row into " + uri);
                 }
-                getContext().getContentResolver().notifyChange(AlexandriaContract.BookEntry.buildFullBookUri(_id), null);
+                // check context not null
+                Context context = getContext();
+                if(context != null) {
+                    context.getContentResolver().notifyChange(AlexandriaContract.BookEntry.buildFullBookUri(_id), null);
+                }
                 break;
             }
             case AUTHOR:{
@@ -270,8 +278,10 @@ public class BookProvider extends ContentProvider {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
         // Because a null deletes all rows
-        if (selection == null || rowsDeleted != 0) {
-            getContext().getContentResolver().notifyChange(uri, null);
+        // check context not null
+        Context context = getContext();
+        if (selection == null || rowsDeleted != 0 && context != null) {
+            context.getContentResolver().notifyChange(uri, null);
         }
         return rowsDeleted;
     }
@@ -298,8 +308,10 @@ public class BookProvider extends ContentProvider {
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
-        if (rowsUpdated != 0) {
-            getContext().getContentResolver().notifyChange(uri, null);
+        // check context not null
+        Context context = getContext();
+        if (rowsUpdated != 0 && context != null) {
+            context.getContentResolver().notifyChange(uri, null);
         }
         return rowsUpdated;
     }

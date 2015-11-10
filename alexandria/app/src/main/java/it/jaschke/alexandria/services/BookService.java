@@ -84,12 +84,25 @@ public class BookService extends IntentService {
                 null  // sort order
         );
 
-        if(bookEntry.getCount()>0){
+        // Handle NullPointerException
+        int bookCount;
+
+        if(bookEntry == null) {
+            bookCount = 0;
+        } else {
+            try {
+                bookCount = bookEntry.getCount();
+            } catch (NullPointerException e) {
+                bookCount = 0;
+            }
+        }
+
+        if(bookCount > 0){
             bookEntry.close();
             return;
         }
 
-        bookEntry.close();
+        if(bookEntry != null) bookEntry.close();
 
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
