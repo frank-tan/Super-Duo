@@ -30,7 +30,8 @@
             android:layout_centerHorizontal="true">
 
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="3"
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:minEms="@integer/ean_width"
@@ -42,7 +43,8 @@
                 android:paddingRight="20dp"/>
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="@string/scan_button"
                 android:id="@+id/scan_button"/>
@@ -57,7 +59,7 @@
             android:layout_marginTop="@dimen/layout_margin_detail_view_small"
             android:layout_marginBottom="@dimen/layout_margin_detail_view_small"
             android:elevation="2dp"
-            android:visibility="invisible"
+            android:visibility="gone"
             >
 
             <include layout="@layout/book_detail_partial"/>
