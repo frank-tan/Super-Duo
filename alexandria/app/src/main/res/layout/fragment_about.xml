@@ -4,34 +4,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="it.jaschke.alexandria.ui.AboutFragment"
-    android:layout_marginLeft="@dimen/layout_margin_detail_view_horizontal"
-    android:layout_marginRight="@dimen/layout_margin_detail_view_horizontal"
-    android:layout_marginTop="@dimen/layout_margin_detail_view_vertical"
-    android:layout_marginBottom="@dimen/layout_margin_detail_view_vertical">
+    android:layout_marginLeft="@dimen/layout_margin_detail_view_large"
+    android:layout_marginRight="@dimen/layout_margin_detail_view_large"
+    android:layout_marginTop="@dimen/layout_margin_detail_view_small"
+    android:layout_marginBottom="@dimen/layout_margin_detail_view_small">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/layout_margin_detail_view_vertical"
-        android:layout_marginBottom="@dimen/layout_margin_detail_view_vertical"
+        android:layout_marginTop="@dimen/layout_margin_detail_view_small"
+        android:layout_marginBottom="@dimen/layout_margin_detail_view_small"
         android:elevation="2dp"
         >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginLeft="@dimen/layout_margin_detail_view_vertical"
-            android:layout_marginRight="@dimen/layout_margin_detail_view_vertical"
-            android:layout_marginTop="@dimen/layout_margin_detail_view_vertical"
-            android:layout_marginBottom="@dimen/layout_margin_detail_view_vertical">
+            android:layout_marginLeft="@dimen/layout_margin_detail_view_small"
+            android:layout_marginRight="@dimen/layout_margin_detail_view_small"
+            android:layout_marginTop="@dimen/layout_margin_detail_view_small"
+            android:layout_marginBottom="@dimen/layout_margin_detail_view_small">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_launcher"
-                android:layout_marginRight="@dimen/layout_margin_detail_view_vertical"/>
+                android:layout_marginRight="@dimen/layout_margin_detail_view_small"/>
 
-            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            <TextView android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text"
+                android:lineSpacingExtra="@dimen/line_space"
                 android:text="@string/about_text"
                 />
         </LinearLayout>

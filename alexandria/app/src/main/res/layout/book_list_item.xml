@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="100dp"
-    android:paddingLeft="@dimen/layout_margin_detail_view_horizontal"
-    android:paddingRight="@dimen/layout_margin_detail_view_horizontal"
+    android:paddingLeft="@dimen/layout_margin_detail_view_large"
+    android:paddingRight="@dimen/layout_margin_detail_view_large"
     android:background="@color/white">
 
     <ImageView
@@ -13,9 +13,9 @@
         android:layout_height="fill_parent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="@dimen/layout_margin_detail_view_vertical"
-        android:layout_marginBottom="@dimen/layout_margin_detail_view_vertical"
-        android:layout_marginRight="@dimen/layout_margin_detail_view_horizontal"
+        android:layout_marginTop="@dimen/layout_margin_detail_view_small"
+        android:layout_marginBottom="@dimen/layout_margin_detail_view_small"
+        android:layout_marginRight="@dimen/layout_margin_detail_view_large"
         android:contentDescription="@string/book_cover" />
 
     <TextView
@@ -41,7 +41,7 @@
         android:textSize="12sp"
         android:ellipsize="end"
         android:maxLines="2"
-        android:layout_marginTop="@dimen/layout_margin_detail_view_vertical"
+        android:layout_marginTop="@dimen/layout_margin_detail_view_small"
         android:layout_marginRight="10dp"
         android:layout_toRightOf="@+id/fullBookCover"
         android:layout_toEndOf="@+id/fullBookCover"
