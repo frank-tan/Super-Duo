@@ -7,7 +7,9 @@
     <string name="scan">Scan/Add a Book</string>
     <string name="books_value" translatable="false">0</string>
     <string name="scan_value" translatable="false">1</string>
-    <string name="about">About this App</string>
+    <string name="about">About the App</string>
+    <string name="details">Book Details</string>
+
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -35,4 +37,6 @@
     <string name="network_unavailable">Network Unavailable</string>
     <string name="pref_startScreen_title">Start Screen</string>
     <string name="search_hint">Type book name to search</string>
+    <string name="book_added">Book Added</string>
+    <string name="canceled">Cancelled</string>
 </resources>
