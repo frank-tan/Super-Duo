@@ -56,8 +56,10 @@ public class BookDetailFragment extends Fragment implements LoaderManager.Loader
             getLoaderManager().restartLoader(LOADER_ID, null, this);
         }
 
+        getActivity().setTitle(R.string.details);
+
         rootView = inflater.inflate(R.layout.fragment_full_book, container, false);
-        rootView.findViewById(R.id.delete_button).setOnClickListener(new View.OnClickListener() {
+        rootView.findViewById(R.id.fab_delete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent bookIntent = new Intent(getActivity(), BookService.class);
@@ -118,7 +120,7 @@ public class BookDetailFragment extends Fragment implements LoaderManager.Loader
         if(authors != null) {
             String[] authorsArr = authors.split(",");
             ((TextView) rootView.findViewById(R.id.authors)).setLines(authorsArr.length);
-            ((TextView) rootView.findViewById(R.id.authors)).setText(authors.replace(",", "\n"));
+            ((TextView) rootView.findViewById(R.id.authors)).setText(authors.replace(",", ", "));
         }
         final String imgUrl = data.getString(data.getColumnIndex(AlexandriaContract.BookEntry.IMAGE_URL));
         if(Patterns.WEB_URL.matcher(imgUrl).matches()){
@@ -155,8 +157,9 @@ public class BookDetailFragment extends Fragment implements LoaderManager.Loader
         }
 
         String categories = data.getString(data.getColumnIndex(AlexandriaContract.CategoryEntry.CATEGORY));
-        ((TextView) rootView.findViewById(R.id.categories)).setText(categories);
-
+        if(categories != null) {
+            ((TextView) rootView.findViewById(R.id.categories)).setText(categories.replace(",",", "));
+        }
     }
 
     @Override

@@ -1,6 +1,5 @@
 package it.jaschke.alexandria.ui;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -17,15 +16,16 @@ public class AboutFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_about, container, false);
+    public void onResume() {
+        super.onResume();
+        getActivity().setTitle(R.string.about);
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        activity.setTitle(R.string.about);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        getActivity().setTitle(R.string.about);
+        return inflater.inflate(R.layout.fragment_about, container, false);
     }
 
 }

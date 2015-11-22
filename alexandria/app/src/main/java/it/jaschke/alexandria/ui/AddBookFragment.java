@@ -1,6 +1,5 @@
 package it.jaschke.alexandria.ui;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -50,8 +49,14 @@ public class AddBookFragment extends Fragment implements LoaderManager.LoaderCal
     }
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public void onResume() {
+        super.onResume();
+        getActivity().setTitle(R.string.scan);
+    }
 
+    @Override
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        getActivity().setTitle(R.string.scan);
         rootView = inflater.inflate(R.layout.fragment_add_book, container, false);
         ean = (EditText) rootView.findViewById(R.id.ean);
 
@@ -104,6 +109,7 @@ public class AddBookFragment extends Fragment implements LoaderManager.LoaderCal
             @Override
             public void onClick(View view) {
                 ean.setText("");
+                Toast.makeText(getActivity(), R.string.book_added, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -115,6 +121,7 @@ public class AddBookFragment extends Fragment implements LoaderManager.LoaderCal
                 bookIntent.setAction(BookService.DELETE_BOOK);
                 getActivity().startService(bookIntent);
                 ean.setText("");
+                Toast.makeText(getActivity(), R.string.canceled, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -152,14 +159,16 @@ public class AddBookFragment extends Fragment implements LoaderManager.LoaderCal
     @Override
     public void onLoadFinished(android.support.v4.content.Loader<Cursor> loader, Cursor data) {
         if (!data.moveToFirst()) {
+            rootView.findViewById(R.id.book_detail_card).setVisibility(View.INVISIBLE);
             return;
         }
 
+        rootView.findViewById(R.id.book_detail_card).setVisibility(View.VISIBLE);
         String bookTitle = data.getString(data.getColumnIndex(AlexandriaContract.BookEntry.TITLE));
-        ((TextView) rootView.findViewById(R.id.bookTitle)).setText(bookTitle);
+        ((TextView) rootView.findViewById(R.id.fullBookTitle)).setText(bookTitle);
 
         String bookSubTitle = data.getString(data.getColumnIndex(AlexandriaContract.BookEntry.SUBTITLE));
-        ((TextView) rootView.findViewById(R.id.bookSubTitle)).setText(bookSubTitle);
+        ((TextView) rootView.findViewById(R.id.fullBookSubTitle)).setText(bookSubTitle);
 
         String authors = data.getString(data.getColumnIndex(AlexandriaContract.AuthorEntry.AUTHOR));
         if(authors != null) {
@@ -172,7 +181,7 @@ public class AddBookFragment extends Fragment implements LoaderManager.LoaderCal
         if(Patterns.WEB_URL.matcher(imgUrl).matches()){
 
             final Context context = getActivity();
-            final ImageView imageView = (ImageView) rootView.findViewById(R.id.bookCover);
+            final ImageView imageView = (ImageView) rootView.findViewById(R.id.fullBookCover);
 
             // force picasso to load image from cache first. If failed, try loading from network.
             Picasso.with(context)
@@ -200,7 +209,7 @@ public class AddBookFragment extends Fragment implements LoaderManager.LoaderCal
                             }
                         }
                     });
-            rootView.findViewById(R.id.bookCover).setVisibility(View.VISIBLE);
+            rootView.findViewById(R.id.fullBookCover).setVisibility(View.VISIBLE);
         }
 
         String categories = data.getString(data.getColumnIndex(AlexandriaContract.CategoryEntry.CATEGORY));
@@ -216,19 +225,14 @@ public class AddBookFragment extends Fragment implements LoaderManager.LoaderCal
     }
 
     private void clearFields(){
-        ((TextView) rootView.findViewById(R.id.bookTitle)).setText("");
-        ((TextView) rootView.findViewById(R.id.bookSubTitle)).setText("");
+        ((TextView) rootView.findViewById(R.id.fullBookTitle)).setText("");
+        ((TextView) rootView.findViewById(R.id.fullBookSubTitle)).setText("");
         ((TextView) rootView.findViewById(R.id.authors)).setText("");
         ((TextView) rootView.findViewById(R.id.categories)).setText("");
-        rootView.findViewById(R.id.bookCover).setVisibility(View.INVISIBLE);
+        rootView.findViewById(R.id.fullBookCover).setVisibility(View.INVISIBLE);
         rootView.findViewById(R.id.save_button).setVisibility(View.INVISIBLE);
         rootView.findViewById(R.id.delete_button).setVisibility(View.INVISIBLE);
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        activity.setTitle(R.string.scan);
+        rootView.findViewById(R.id.book_detail_card).setVisibility(View.GONE);
     }
 
     /**

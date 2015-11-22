@@ -1,7 +1,6 @@
 package it.jaschke.alexandria.ui;
 
 import android.app.Activity;
-import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -39,8 +38,15 @@ public class ListOfBooksFragment extends Fragment implements LoaderManager.Loade
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().setTitle(R.string.books);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        getActivity().setTitle(R.string.books);
         mCursor = getActivity().getContentResolver().query(
                 AlexandriaContract.BookEntry.CONTENT_URI,
                 null, // leaving "columns" null just returns all the columns.
@@ -87,9 +93,9 @@ public class ListOfBooksFragment extends Fragment implements LoaderManager.Loade
             @Override
             public void onClick(View v) {
                 Activity activity = getActivity();
-                if (activity instanceof NavigationDrawerController) {
-                    NavigationDrawerController navigationDrawerController = (NavigationDrawerController) activity;
-                    navigationDrawerController.setActiveDrawerItem(1);
+                if (activity instanceof NavigationDrawerFragment.NavigationDrawerCallbacks) {
+                    NavigationDrawerFragment.NavigationDrawerCallbacks navigationDrawerCallbacks = (NavigationDrawerFragment.NavigationDrawerCallbacks) activity;
+                    navigationDrawerCallbacks.selectNavigationDrawerItem(1);
                 }
             }
         });
@@ -149,12 +155,6 @@ public class ListOfBooksFragment extends Fragment implements LoaderManager.Loade
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         bookListAdapter.swapCursor(null);
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        getActivity().setTitle(R.string.books);
     }
 
 }

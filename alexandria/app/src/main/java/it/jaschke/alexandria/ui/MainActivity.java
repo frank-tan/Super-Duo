@@ -22,7 +22,7 @@ import it.jaschke.alexandria.api.BookListItemCallback;
 import it.jaschke.alexandria.util.Utilities;
 
 
-public class MainActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks, BookListItemCallback, NavigationDrawerController {
+public class MainActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks, BookListItemCallback {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -116,8 +116,14 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 .commit();
     }
 
+    @Override
+    public void selectNavigationDrawerItem(int position) {
+        navigationDrawerFragment.selectItem(position);
+    }
+
     public void setTitle(int titleId) {
         mTitle = getString(titleId);
+        getSupportActionBar().setTitle(mTitle);
     }
 
     public void restoreActionBar() {
@@ -208,10 +214,4 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         super.onBackPressed();
     }
 
-    @Override
-    public void setActiveDrawerItem(int position) {
-        if(navigationDrawerFragment != null) {
-            navigationDrawerFragment.selectItem(position);
-        }
-    }
 }
