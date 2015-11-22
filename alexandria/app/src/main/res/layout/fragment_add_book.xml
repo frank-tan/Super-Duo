@@ -3,20 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="it.jaschke.alexandria.ui.AddBookFragment">
+    tools:context="it.jaschke.alexandria.ui.AddBookFragment"
+    android:paddingLeft="@dimen/layout_margin_detail_view_large"
+    android:paddingStart="@dimen/layout_margin_detail_view_large"
+    android:paddingRight="@dimen/layout_margin_detail_view_large"
+    android:paddingEnd="@dimen/layout_margin_detail_view_large">
 
     <RelativeLayout
         android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_gravity="center_horizontal|top">
 
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:id="@+id/ean_container"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="@dimen/layout_margin_detail_view_large"
+            android:layout_marginStart="@dimen/layout_margin_detail_view_large"
+            android:layout_marginRight="@dimen/layout_margin_detail_view_large"
+            android:layout_marginEnd="@dimen/layout_margin_detail_view_large"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true">
 
@@ -40,60 +49,20 @@
 
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/bookTitle"
-            android:textSize="@dimen/head_line"
-            android:textIsSelectable="true"
-            android:textStyle="bold"
-            android:layout_marginTop="25dp"
-            android:paddingRight="20dp"
-            android:layout_below="@+id/ean_container"
-            android:layout_alignLeft="@+id/ean_container"
-            android:layout_alignStart="@+id/ean_container"/>
+            android:id="@+id/book_detail_card"
+            android:layout_below="@id/ean_container"
+            android:layout_marginTop="@dimen/layout_margin_detail_view_small"
+            android:layout_marginBottom="@dimen/layout_margin_detail_view_small"
+            android:elevation="2dp"
+            android:visibility="invisible"
+            >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/bookSubTitle"
-            android:layout_marginTop="10dp"
-            android:layout_below="@+id/bookTitle"
-            android:maxLines="3"
-            android:ellipsize="end"
-            android:layout_alignLeft="@+id/ean_container"
-            />
+            <include layout="@layout/book_detail_partial"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/authors"
-            android:gravity="end"
-            android:textSize="@dimen/small_font_size"
-            android:layout_marginTop="20dp"
-            android:layout_below="@+id/bookSubTitle"
-            android:layout_alignRight="@+id/ean_container"
-            android:layout_alignEnd="@+id/ean_container"
-            />
-
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="120dp"
-            android:id="@+id/bookCover"
-            android:contentDescription="@string/book_cover"
-            android:layout_alignTop="@+id/authors"
-            android:layout_alignLeft="@+id/ean_container"
-            android:layout_alignStart="@+id/ean_container"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/categories"
-            android:textSize="@dimen/small_font_size"
-            android:layout_below="@+id/bookCover"
-            android:layout_marginTop="20dp"
-            android:layout_alignLeft="@+id/ean_container"
-            android:layout_alignStart="@+id/ean_container"/>
+        </android.support.v7.widget.CardView>
 
         <LinearLayout
             android:orientation="horizontal"
