@@ -22,7 +22,7 @@ import it.jaschke.alexandria.api.BookListItemCallback;
 import it.jaschke.alexandria.util.Utilities;
 
 
-public class MainActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks, BookListItemCallback {
+public class MainActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks, BookListItemCallback, BookDetailFragment.HomeIconButtonCallback {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -135,7 +135,6 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         }
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!navigationDrawerFragment.isDrawerOpen()) {
@@ -186,9 +185,18 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         }
         getSupportFragmentManager().beginTransaction()
                 .replace(id, fragment)
-                .addToBackStack("Book Detail")
+                .addToBackStack(getString(R.string.details))
                 .commit();
+    }
 
+    private void setActionBarIconAsUp () {
+        navigationDrawerFragment.setDrawerIndicatorEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void setActionBarIconAsNav () {
+        navigationDrawerFragment.setDrawerIndicatorEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private class MessageReceiver extends BroadcastReceiver {
@@ -208,10 +216,21 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
     @Override
     public void onBackPressed() {
+        setActionBarIconAsNav();
+
         if(getSupportFragmentManager().getBackStackEntryCount()<2){
             finish();
         }
         super.onBackPressed();
     }
 
+    @Override
+    public void setHomeIconAsUp() {
+        setActionBarIconAsUp();
+    }
+
+    @Override
+    public void setHomeIconAsNav() {
+        setActionBarIconAsNav();
+    }
 }

@@ -1,5 +1,6 @@
 package it.jaschke.alexandria.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -46,7 +47,6 @@ public class BookDetailFragment extends Fragment implements LoaderManager.Loader
         setHasOptionsMenu(true);
     }
 
-
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -55,8 +55,11 @@ public class BookDetailFragment extends Fragment implements LoaderManager.Loader
             ean = arguments.getString(BookDetailFragment.EAN_KEY);
             getLoaderManager().restartLoader(LOADER_ID, null, this);
         }
-
-        getActivity().setTitle(R.string.details);
+        Activity activity = getActivity();
+        activity.setTitle(R.string.details);
+        if(activity instanceof HomeIconButtonCallback) {
+            ((HomeIconButtonCallback) activity).setHomeIconAsUp();
+        }
 
         rootView = inflater.inflate(R.layout.fragment_full_book, container, false);
         rootView.findViewById(R.id.fab_delete).setOnClickListener(new View.OnClickListener() {
@@ -79,6 +82,17 @@ public class BookDetailFragment extends Fragment implements LoaderManager.Loader
 
         MenuItem menuItem = menu.findItem(R.id.action_share);
         shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                //called when the up affordance/carat in actionbar is pressed
+                getActivity().onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -170,8 +184,19 @@ public class BookDetailFragment extends Fragment implements LoaderManager.Loader
     @Override
     public void onPause() {
         super.onDestroyView();
+
+        Activity activity = getActivity();
+        if(activity instanceof HomeIconButtonCallback) {
+            ((HomeIconButtonCallback) activity).setHomeIconAsNav();
+        }
+
         if(MainActivity.mIsTablet && rootView.findViewById(R.id.right_container)==null){
             getActivity().getSupportFragmentManager().popBackStack();
         }
+    }
+
+    public interface HomeIconButtonCallback {
+        void setHomeIconAsUp ();
+        void setHomeIconAsNav ();
     }
 }
