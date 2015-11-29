@@ -58,7 +58,7 @@ public class BookDetailFragment extends Fragment implements LoaderManager.Loader
         }
         Activity activity = getActivity();
         activity.setTitle(R.string.details);
-        if(activity instanceof HomeIconButtonCallback) {
+        if(!MainActivity.mIsTablet && activity instanceof HomeIconButtonCallback) {
             ((HomeIconButtonCallback) activity).setHomeIconAsUp();
         }
 
@@ -190,12 +190,8 @@ public class BookDetailFragment extends Fragment implements LoaderManager.Loader
         super.onDestroyView();
 
         Activity activity = getActivity();
-        if(activity instanceof HomeIconButtonCallback) {
+        if(!MainActivity.mIsTablet && activity instanceof HomeIconButtonCallback) {
             ((HomeIconButtonCallback) activity).setHomeIconAsNav();
-        }
-
-        if(MainActivity.mIsTablet && rootView.findViewById(R.id.right_container)==null){
-            getActivity().getSupportFragmentManager().popBackStack();
         }
     }
 

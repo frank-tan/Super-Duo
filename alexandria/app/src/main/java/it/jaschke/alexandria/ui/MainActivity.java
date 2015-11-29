@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import it.jaschke.alexandria.R;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
      */
     private CharSequence mTitle;
     public static boolean mIsTablet = false;
+    private boolean mRightPaneVisible = false;
     private int mActiveScreenIndex = 0;
     private BroadcastReceiver mBroadcastReceiver;
 
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     public static final String MESSAGE_KEY = "MESSAGE_EXTRA";
 
     private static final String ACTIVE_SCREEN = "ACTIVE_SCREEN";
+    private static final String RIGHT_PANE_VISIBLE = "RIGHT_PANE_VISIBLE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // // TODO: 24/10/2015 what does this do?
         mBroadcastReceiver = new MessageReceiver();
         IntentFilter filter = new IntentFilter(MESSAGE_EVENT);
         LocalBroadcastManager.getInstance(this).registerReceiver(mBroadcastReceiver,filter);
@@ -68,24 +70,38 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         navigationDrawerFragment.setUp(R.id.navigation_drawer,
                     (DrawerLayout) findViewById(R.id.drawer_layout));
 
+        // if the last screen is not recorded, open the page stored in user preference
+        navigationDrawerFragment.selectItem(Integer.parseInt(Utilities.getStringPreference(this, getString(R.string.pref_startScreen), "0")));
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+
         // restore last active screen if available
         if(savedInstanceState != null) {
             int lastActiveScreen = savedInstanceState.getInt(ACTIVE_SCREEN, -1);
             // if the last screen is recorded, let the system handle the restoration
             if(lastActiveScreen != -1) {
                 mActiveScreenIndex = lastActiveScreen;
-                return;
             }
+            mRightPaneVisible = savedInstanceState.getBoolean(RIGHT_PANE_VISIBLE, false);
         }
 
-        // if the last screen is not recorded, open the page stored in user preference
-        navigationDrawerFragment.selectItem(Integer.parseInt(Utilities.getStringPreference(this, getString(R.string.pref_startScreen), "0")));
+        if(mIsTablet) {
+            if (mRightPaneVisible) {
+                findViewById(R.id.right_container).setVisibility(View.VISIBLE);
+            }
+        }
+        super.onRestoreInstanceState(savedInstanceState);
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
         outState.putInt(ACTIVE_SCREEN, mActiveScreenIndex);
+        if(mIsTablet) {
+            outState.putBoolean(RIGHT_PANE_VISIBLE, findViewById(R.id.right_container).getVisibility() == View.VISIBLE);
+        }
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -103,11 +119,12 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 break;
             case 1:
                 nextFragment = new AddBookFragment();
+                findViewById(R.id.right_container).setVisibility(View.GONE);
                 break;
             case 2:
                 nextFragment = new AboutFragment();
+                findViewById(R.id.right_container).setVisibility(View.GONE);
                 break;
-
         }
 
         fragmentManager.beginTransaction()
@@ -121,9 +138,14 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         navigationDrawerFragment.selectItem(position);
     }
 
+    @Override
     public void setTitle(int titleId) {
         mTitle = getString(titleId);
-        getSupportActionBar().setTitle(mTitle);
+        if(mIsTablet) {
+            getSupportActionBar().setTitle(R.string.app_name);
+        } else {
+            getSupportActionBar().setTitle(mTitle);
+        }
     }
 
     public void restoreActionBar() {
@@ -131,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         //added null check
         if(actionBar != null) {
             actionBar.setDisplayShowTitleEnabled(true);
-            actionBar.setTitle(mTitle);
+            setTitle(mTitle);
         }
     }
 
@@ -179,9 +201,12 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         BookDetailFragment fragment = new BookDetailFragment();
         fragment.setArguments(args);
 
-        int id = R.id.container;
-        if(findViewById(R.id.right_container) != null){
+        int id;
+        if(mIsTablet) {
             id = R.id.right_container;
+            findViewById(id).setVisibility(View.VISIBLE);
+        } else {
+            id = R.id.container;
         }
         getSupportFragmentManager().beginTransaction()
                 .replace(id, fragment)
