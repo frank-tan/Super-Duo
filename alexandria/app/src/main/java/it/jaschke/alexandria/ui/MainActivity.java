@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -69,6 +70,20 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         // Set up the drawer.
         navigationDrawerFragment.setUp(R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        if(savedInstanceState != null) {
+            int lastActiveScreen = savedInstanceState.getInt(ACTIVE_SCREEN, -1);
+            // if the last screen is recorded, let the system handle the restoration
+            if (lastActiveScreen != -1) {
+                mActiveScreenIndex = lastActiveScreen;
+                return;
+            }
+        }
+
+        // if the last screen is not recorded, open the page stored in user preference
+        navigationDrawerFragment.selectItem(Integer.parseInt(Utilities.getStringPreference(this, getString(R.string.pref_startScreen), "0")));
+
+        Log.i("alexandria", "mActiveScreenIndex: " + mActiveScreenIndex);
     }
 
     @Override
@@ -76,14 +91,6 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
         // restore last active screen if available
         if(savedInstanceState != null) {
-            int lastActiveScreen = savedInstanceState.getInt(ACTIVE_SCREEN, -1);
-            // if the last screen is recorded, let the system handle the restoration
-            if(lastActiveScreen != -1) {
-                mActiveScreenIndex = lastActiveScreen;
-            } else {
-                // if the last screen is not recorded, open the page stored in user preference
-                navigationDrawerFragment.selectItem(Integer.parseInt(Utilities.getStringPreference(this, getString(R.string.pref_startScreen), "0")));
-            }
             mRightPaneVisible = savedInstanceState.getBoolean(RIGHT_PANE_VISIBLE, false);
         }
 
