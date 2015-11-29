@@ -2,7 +2,6 @@ package it.jaschke.alexandria;
 
 import android.app.Application;
 
-import com.squareup.leakcanary.LeakCanary;
 import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
 
@@ -12,7 +11,6 @@ import com.squareup.picasso.Picasso;
 public class AlexandriaApplication extends Application {
     @Override public void onCreate() {
         super.onCreate();
-        LeakCanary.install(this);
 
         Picasso.Builder builder = new Picasso.Builder(this);
         builder.downloader(new OkHttpDownloader(this, Integer.MAX_VALUE));
@@ -20,6 +18,7 @@ public class AlexandriaApplication extends Application {
         built.setIndicatorsEnabled(false);
         if(BuildConfig.DEBUG) {
             built.setLoggingEnabled(true);
+            //LeakCanary.install(this);
         }
         Picasso.setSingletonInstance(built);
     }
