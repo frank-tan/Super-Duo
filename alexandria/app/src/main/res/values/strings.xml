@@ -38,5 +38,6 @@
     <string name="pref_startScreen_title">Start Screen</string>
     <string name="search_hint">Type book name to search</string>
     <string name="book_added">Book Added</string>
+    <string name="book_deleted">Book Deleted</string>
     <string name="canceled">Cancelled</string>
 </resources>

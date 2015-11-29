@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
@@ -70,6 +71,7 @@ public class BookDetailFragment extends Fragment implements LoaderManager.Loader
                 bookIntent.setAction(BookService.DELETE_BOOK);
                 getActivity().startService(bookIntent);
                 getActivity().getSupportFragmentManager().popBackStack();
+                Toast.makeText(getContext(),R.string.book_deleted,Toast.LENGTH_LONG).show();
             }
         });
         return rootView;
