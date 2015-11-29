@@ -48,31 +48,33 @@ public class BookListAdapter extends CursorAdapter {
         final String imgUrl = cursor.getString(cursor.getColumnIndex(AlexandriaContract.BookEntry.IMAGE_URL));
 
         // force picasso to load image from cache first. If failed, try loading from network.
-        Picasso.with(context)
-                .load(imgUrl)
-                .networkPolicy(NetworkPolicy.OFFLINE)
-                //.placeholder(R.drawable.backdrop_loading_placeholder)
-                //.error(R.drawable.backdrop_failed_placeholder)
-                .fit()
-                .centerCrop()
-                .into(viewHolder.bookCover, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                    }
-
-                    @Override
-                    public void onError() {
-                        if (Utilities.isNetworkAvailable(context)) {
-                            Picasso.with(context)
-                                    .load(imgUrl)
-                                    //.placeholder(R.drawable.backdrop_loading_placeholder)
-                                    //.error(R.drawable.backdrop_failed_placeholder)
-                                    .fit()
-                                    .centerCrop()
-                                    .into(viewHolder.bookCover);
+        if(imgUrl != null && imgUrl.length() > 0) {
+            Picasso.with(context)
+                    .load(imgUrl)
+                    .networkPolicy(NetworkPolicy.OFFLINE)
+                            //.placeholder(R.drawable.backdrop_loading_placeholder)
+                            //.error(R.drawable.backdrop_failed_placeholder)
+                    .fit()
+                    .centerCrop()
+                    .into(viewHolder.bookCover, new Callback() {
+                        @Override
+                        public void onSuccess() {
                         }
-                    }
-                });
+
+                        @Override
+                        public void onError() {
+                            if (Utilities.isNetworkAvailable(context)) {
+                                Picasso.with(context)
+                                        .load(imgUrl)
+                                                //.placeholder(R.drawable.backdrop_loading_placeholder)
+                                                //.error(R.drawable.backdrop_failed_placeholder)
+                                        .fit()
+                                        .centerCrop()
+                                        .into(viewHolder.bookCover);
+                            }
+                        }
+                    });
+        }
 
         String bookTitle = cursor.getString(cursor.getColumnIndex(AlexandriaContract.BookEntry.TITLE));
         viewHolder.bookTitle.setText(bookTitle);
