@@ -29,9 +29,7 @@ public class ListOfBooksFragment extends Fragment implements LoaderManager.Loade
     private ListView bookList;
     private final int position = ListView.INVALID_POSITION;
     private EditText searchText;
-    private Cursor mCursor;
     private FloatingActionButton mFloatingActionButton;
-
     private static final int LOADER_ID = 10;
 
     public ListOfBooksFragment() {
@@ -47,16 +45,7 @@ public class ListOfBooksFragment extends Fragment implements LoaderManager.Loade
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         getActivity().setTitle(R.string.books);
-        mCursor = getActivity().getContentResolver().query(
-                AlexandriaContract.BookEntry.CONTENT_URI,
-                null, // leaving "columns" null just returns all the columns.
-                null, // cols for "where" clause
-                null, // values for "where" clause
-                null  // sort order
-        );
 
-
-        bookListAdapter = new BookListAdapter(getActivity(), mCursor, 0);
         View rootView = inflater.inflate(R.layout.fragment_list_of_books, container, false);
         searchText = (EditText) rootView.findViewById(R.id.searchText);
         TextWatcher textWatcher = new TextWatcher() {
@@ -74,6 +63,7 @@ public class ListOfBooksFragment extends Fragment implements LoaderManager.Loade
         searchText.addTextChangedListener(textWatcher);
 
         bookList = (ListView) rootView.findViewById(R.id.listOfBooks);
+        bookListAdapter = new BookListAdapter(getActivity(), null, 0);
         bookList.setAdapter(bookListAdapter);
 
         bookList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -100,16 +90,14 @@ public class ListOfBooksFragment extends Fragment implements LoaderManager.Loade
             }
         });
 
+        getLoaderManager().initLoader(LOADER_ID, null, this);
+
         return rootView;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        // Close the cursor when the fragment is destroyed.
-        if(mCursor!= null && !mCursor.isClosed()) {
-            mCursor.close();
-        }
     }
 
     private void restartLoader(){
@@ -156,5 +144,4 @@ public class ListOfBooksFragment extends Fragment implements LoaderManager.Loade
     public void onLoaderReset(Loader<Cursor> loader) {
         bookListAdapter.swapCursor(null);
     }
-
 }
