@@ -3,9 +3,10 @@
     android:orientation="horizontal"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:paddingLeft="@dimen/layout_margin_detail_view_large"
-    android:paddingStart="@dimen/layout_margin_detail_view_large"
-    android:layout_gravity="left|center_vertical">
+    android:paddingLeft="@dimen/layout_margin_detail_view_small"
+    android:paddingStart="@dimen/layout_margin_detail_view_small"
+    android:layout_gravity="left|center_vertical"
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,10 +20,10 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
-        android:layout_marginLeft="@dimen/layout_x_large"
-        android:layout_marginStart="@dimen/layout_x_large"
-        android:layout_marginRight="@dimen/layout_x_large"
-        android:layout_marginEnd="@dimen/layout_x_large">
+        android:layout_marginLeft="@dimen/layout_margin_detail_view_small"
+        android:layout_marginStart="@dimen/layout_margin_detail_view_small"
+        android:layout_marginRight="@dimen/layout_margin_detail_view_small"
+        android:layout_marginEnd="@dimen/layout_margin_detail_view_small">
         <EditText
             android:layout_width="0dp"
             android:layout_weight="3"
