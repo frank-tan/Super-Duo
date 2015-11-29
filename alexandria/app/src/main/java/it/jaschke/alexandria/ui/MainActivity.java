@@ -68,10 +68,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
         // Set up the drawer.
         navigationDrawerFragment.setUp(R.id.navigation_drawer,
-                    (DrawerLayout) findViewById(R.id.drawer_layout));
-
-        // if the last screen is not recorded, open the page stored in user preference
-        navigationDrawerFragment.selectItem(Integer.parseInt(Utilities.getStringPreference(this, getString(R.string.pref_startScreen), "0")));
+                (DrawerLayout) findViewById(R.id.drawer_layout));
     }
 
     @Override
@@ -83,6 +80,9 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
             // if the last screen is recorded, let the system handle the restoration
             if(lastActiveScreen != -1) {
                 mActiveScreenIndex = lastActiveScreen;
+            } else {
+                // if the last screen is not recorded, open the page stored in user preference
+                navigationDrawerFragment.selectItem(Integer.parseInt(Utilities.getStringPreference(this, getString(R.string.pref_startScreen), "0")));
             }
             mRightPaneVisible = savedInstanceState.getBoolean(RIGHT_PANE_VISIBLE, false);
         }
@@ -119,11 +119,13 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 break;
             case 1:
                 nextFragment = new AddBookFragment();
-                findViewById(R.id.right_container).setVisibility(View.GONE);
+                if(mIsTablet)
+                    findViewById(R.id.right_container).setVisibility(View.GONE);
                 break;
             case 2:
                 nextFragment = new AboutFragment();
-                findViewById(R.id.right_container).setVisibility(View.GONE);
+                if(mIsTablet)
+                    findViewById(R.id.right_container).setVisibility(View.GONE);
                 break;
         }
 
