@@ -1,6 +1,5 @@
 package barqsoft.footballscores.ui;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,7 +17,6 @@ import barqsoft.footballscores.R;
 import barqsoft.footballscores.adapter.ScoresAdapter;
 import barqsoft.footballscores.adapter.ViewHolder;
 import barqsoft.footballscores.data.DatabaseContract;
-import barqsoft.footballscores.service.myFetchService;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -52,8 +50,6 @@ public class MatchListFragment extends Fragment implements LoaderManager.LoaderC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState) {
-        // TODO: 31/10/2015 should not do update here
-        update_scores();
 
         View rootView = inflater.inflate(R.layout.fragment_match_list, container, false);
         final ListView score_list = (ListView) rootView.findViewById(R.id.scores_list);
@@ -109,12 +105,6 @@ public class MatchListFragment extends Fragment implements LoaderManager.LoaderC
         mAdapter.swapCursor(null);
     }
 
-    // TODO: 31/10/2015 does not belong here
-    private void update_scores()
-    {
-        Intent intent = new Intent(getActivity(), myFetchService.class);
-        getActivity().startService(intent);
-    }
     public void setFragmentDate(String date)
     {
         mFragmentDate = date;

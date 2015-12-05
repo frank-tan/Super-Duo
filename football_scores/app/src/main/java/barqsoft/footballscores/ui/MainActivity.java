@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import barqsoft.footballscores.R;
+import barqsoft.footballscores.sync.SyncAdapter;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -21,6 +22,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        SyncAdapter.initialize(this);
 
         if (savedInstanceState != null) {
             Log.v(LOG_TAG,"savedInstanceState is not null");

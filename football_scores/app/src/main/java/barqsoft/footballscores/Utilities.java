@@ -10,6 +10,7 @@ public class Utilities
     public static final int CHAMPIONS_LEAGUE = 362;
     public static final int PRIMERA_DIVISION = 358;
     public static final int BUNDESLIGA = 351;
+
     public static String getLeague(int league_num)
     {
         switch (league_num)
@@ -94,4 +95,5 @@ public class Utilities
             default: return R.drawable.ic_launcher;
         }
     }
+
 }
