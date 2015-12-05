@@ -39,4 +39,5 @@
     <string name="book_added">Book Added</string>
     <string name="book_deleted">Book Deleted</string>
     <string name="canceled">Cancelled</string>
+    <string name="logo_desc">Logo for Alexandria app</string>
 </resources>

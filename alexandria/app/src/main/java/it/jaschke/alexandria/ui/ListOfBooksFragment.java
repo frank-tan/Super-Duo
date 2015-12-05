@@ -95,11 +95,6 @@ public class ListOfBooksFragment extends Fragment implements LoaderManager.Loade
         return rootView;
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
     private void restartLoader(){
         getLoaderManager().restartLoader(LOADER_ID, null, this);
     }

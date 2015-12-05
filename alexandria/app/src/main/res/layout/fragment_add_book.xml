@@ -1,103 +1,97 @@
-<FrameLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context="it.jaschke.alexandria.ui.AddBookFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="it.jaschke.alexandria.ui.AddBookFragment"
+    android:layout_gravity="center_horizontal|top"
     android:paddingLeft="@dimen/layout_margin_detail_view_large"
     android:paddingStart="@dimen/layout_margin_detail_view_large"
     android:paddingRight="@dimen/layout_margin_detail_view_large"
     android:paddingEnd="@dimen/layout_margin_detail_view_large">
 
-    <RelativeLayout
+    <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal|top">
+        android:id="@+id/ean_container"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="@dimen/layout_margin_detail_view_large"
+        android:layout_marginStart="@dimen/layout_margin_detail_view_large"
+        android:layout_marginRight="@dimen/layout_margin_detail_view_large"
+        android:layout_marginEnd="@dimen/layout_margin_detail_view_large"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:id="@+id/ean_container"
+        <EditText
+            android:layout_width="0dp"
+            android:layout_weight="3"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="30dp"
-            android:layout_marginLeft="@dimen/layout_margin_detail_view_large"
-            android:layout_marginStart="@dimen/layout_margin_detail_view_large"
-            android:layout_marginRight="@dimen/layout_margin_detail_view_large"
-            android:layout_marginEnd="@dimen/layout_margin_detail_view_large"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true">
+            android:inputType="number"
+            android:minEms="@integer/ean_width"
+            android:id="@+id/ean"
+            android:saveEnabled="true"
+            android:maxLength="@integer/ean_size"
+            android:maxLines="1"
+            android:hint="@string/input_hint"
+            android:paddingRight="20dp"/>
 
-            <EditText
-                android:layout_width="0dp"
-                android:layout_weight="3"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:minEms="@integer/ean_width"
-                android:id="@+id/ean"
-                android:saveEnabled="true"
-                android:maxLength="@integer/ean_size"
-                android:maxLines="1"
-                android:hint="@string/input_hint"
-                android:paddingRight="20dp"/>
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="@string/scan_button"
-                android:id="@+id/scan_button"/>
-
-        </LinearLayout>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:id="@+id/book_detail_card"
-            android:layout_below="@id/ean_container"
-            android:layout_marginTop="@dimen/layout_margin_detail_view_small"
-            android:layout_marginBottom="@dimen/layout_margin_detail_view_small"
-            android:elevation="2dp"
-            android:visibility="gone"
-            >
+            android:text="@string/scan_button"
+            android:id="@+id/scan_button"/>
 
-            <include layout="@layout/book_detail_partial"/>
+    </LinearLayout>
 
-        </android.support.v7.widget.CardView>
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/book_detail_card"
+        android:layout_below="@id/ean_container"
+        android:layout_marginTop="@dimen/layout_margin_detail_view_small"
+        android:layout_marginBottom="@dimen/layout_margin_detail_view_small"
+        android:elevation="2dp"
+        android:visibility="gone"
+        >
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="50dip"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
+        <include layout="@layout/book_detail_partial"/>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:text="@string/cancel_button"
-                android:layout_weight="1"
-                style="?android:attr/buttonBarButtonStyle"
-                android:id="@+id/delete_button"
-                android:drawableLeft="@drawable/ic_action_discard"
-                android:visibility="invisible"
-                />
+    </android.support.v7.widget.CardView>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:text="@string/ok_button"
-                android:visibility="invisible"
-                android:layout_weight="1"
-                android:id="@+id/save_button"
-                android:drawableLeft="@drawable/ic_action_accept"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_gravity="bottom"
-                />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
-        </LinearLayout>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="@string/cancel_button"
+            android:layout_weight="1"
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/delete_button"
+            android:drawableLeft="@drawable/ic_action_discard"
+            android:visibility="invisible"
+            />
 
-    </RelativeLayout>
-</FrameLayout>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="@string/ok_button"
+            android:visibility="invisible"
+            android:layout_weight="1"
+            android:id="@+id/save_button"
+            android:drawableLeft="@drawable/ic_action_accept"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_gravity="bottom"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -256,7 +256,7 @@ public class AddBookFragment extends Fragment implements LoaderManager.LoaderCal
     /**
      * Start scanning activity with any screen orientation
      */
-    public void startBarcodeScan() {
+    private void startBarcodeScan() {
         IntentIntegrator integrator = IntentIntegrator.forSupportFragment(this);
         integrator.setCaptureActivity(CaptureAnyOrientationActivity.class);
         integrator.setOrientationLocked(false);
