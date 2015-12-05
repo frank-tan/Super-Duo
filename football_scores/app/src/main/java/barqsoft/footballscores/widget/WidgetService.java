@@ -97,7 +97,6 @@ class ScoreListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFacto
             rv.setImageViewResource(R.id.away_crest, Utilities.getTeamCrestByTeamName(
                     mCursor.getString(COL_AWAY)));
 
-            // Set the click intent so that we can handle it and show a toast message
             final Intent fillInIntent = new Intent();
             rv.setOnClickFillInIntent(R.id.widget, fillInIntent);
 

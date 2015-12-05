@@ -13,7 +13,6 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
 import barqsoft.footballscores.R;
 import barqsoft.footballscores.data.DatabaseContract;
@@ -48,7 +47,6 @@ public class FootballAppCollectionWidgetProvider extends AppWidgetProvider {
             sDataObserver = new ScoreDataProviderObserver(mgr, cn, sWorkerQueue);
             r.registerContentObserver(DatabaseContract.scores_table.buildScoreWithDate(), true, sDataObserver);
         }
-        Toast.makeText(context, "widget enabled", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -56,10 +54,6 @@ public class FootballAppCollectionWidgetProvider extends AppWidgetProvider {
         final String action = intent.getAction();
 
         if (action.equals(CLICK_ACTION)) {
-            Toast.makeText(ctx, "widget clicked", Toast.LENGTH_SHORT).show();
-            // Show a toast
-//            final int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
-//                    AppWidgetManager.INVALID_APPWIDGET_ID);
             intent.setClass(ctx, MainActivity.class);
             ctx.startActivity(intent);
         }
@@ -69,7 +63,6 @@ public class FootballAppCollectionWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        Toast.makeText(context, "widget onupdate", Toast.LENGTH_SHORT).show();
         // Update each of the widgets with the remote adapter
         for (int i = 0; i < appWidgetIds.length; ++i) {
             // Specify the service to provide data for the collection widget.  Note that we need to

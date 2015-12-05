@@ -3,10 +3,13 @@ package barqsoft.footballscores.ui;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,11 +30,15 @@ public class PagerFragment extends Fragment
     private static String CURRENT_FRAGMENT_ID_TAG = "PAGER_CURRENT_FRAGMENT_TAG";
 
     private ViewPager mViewPager;
+    TabLayout tabLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.pager_fragment, container, false);
+
+        ((AppCompatActivity)getActivity()).setSupportActionBar((Toolbar) rootView.findViewById(R.id.pager_header));
+
         mViewPager = (ViewPager) rootView.findViewById(R.id.pager);
 
         if (savedInstanceState != null) {
@@ -42,6 +49,9 @@ public class PagerFragment extends Fragment
 
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.setCurrentItem(mCurrentFragmentId);
+
+        tabLayout = (TabLayout) rootView.findViewById(R.id.tabLayout);
+        tabLayout.setupWithViewPager(mViewPager);
 
         return rootView;
     }
@@ -107,4 +117,5 @@ public class PagerFragment extends Fragment
             }
         }
     }
+
 }

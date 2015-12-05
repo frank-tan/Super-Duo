@@ -1,6 +1,7 @@
 package barqsoft.footballscores.ui;
 
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -71,6 +72,10 @@ public class MatchListFragment extends Fragment implements LoaderManager.LoaderC
             }
         });
         getLoaderManager().initLoader(SCORES_LOADER, null, this);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            score_list.setNestedScrollingEnabled(true);
+        }
 
         return rootView;
     }
