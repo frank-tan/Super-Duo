@@ -43,4 +43,5 @@
     <string name="app_launcher">App Launcher</string>
     <string name="home_crest_desc">Home team crest image</string>
     <string name="guest_crest_desc">Guest team crest image</string>
+    <string name="share_match">Share the match in other apps</string>
 </resources>
