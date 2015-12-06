@@ -91,9 +91,7 @@ public class MatchListFragment extends Fragment implements LoaderManager.LoaderC
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle)
     {
         String[] selectionArgs = new String[]{mFragmentDate};
-        if(selectionArgs == null) {
-            Log.e("MatchListFragment","selectionArgs is null");
-        }
+
         return new CursorLoader(getActivity(), DatabaseContract.scores_table.buildScoreWithDate(),
                 null,null, selectionArgs,null);
     }

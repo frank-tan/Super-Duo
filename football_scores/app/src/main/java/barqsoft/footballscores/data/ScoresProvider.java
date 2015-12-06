@@ -1,6 +1,7 @@
 package barqsoft.footballscores.data;
 
 import android.content.ContentProvider;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
@@ -120,7 +121,10 @@ public class ScoresProvider extends ContentProvider
                     projection,SCORES_BY_LEAGUE,selectionArgs,null,null,sortOrder); break;
             default: throw new UnsupportedOperationException("Unknown Uri" + uri);
         }
-        retCursor.setNotificationUri(getContext().getContentResolver(),uri);
+        ContentResolver contentResolver = getContext().getContentResolver();
+        if(contentResolver != null) {
+            retCursor.setNotificationUri(contentResolver, uri);
+        }
         return retCursor;
     }
 
@@ -156,7 +160,10 @@ public class ScoresProvider extends ContentProvider
                 } finally {
                     db.endTransaction();
                 }
-                getContext().getContentResolver().notifyChange(uri,null);
+                ContentResolver contentResolver = getContext().getContentResolver();
+                if(contentResolver != null) {
+                    contentResolver.notifyChange(uri, null);
+                }
                 return returncount;
             default:
                 return super.bulkInsert(uri,values);

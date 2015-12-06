@@ -8,31 +8,19 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SyncRequest;
 import android.content.SyncResult;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 import barqsoft.footballscores.R;
-import barqsoft.footballscores.Utilities;
 
 /**
  * Created by tan on 5/12/2015.
  */
 public class SyncAdapter extends AbstractThreadedSyncAdapter {
     private static final String APP_NAME = "football-scores";
-    // Sync every 1 hours
-    private static final long SYNC_INTERVAL = (long) 1 * 60 * 60;
+    // Sync every 2 hours
+    private static final long SYNC_INTERVAL = (long) 2 * 60 * 60;
 
     // With .5 hours flexible time
     private static final long SYNC_FLEXTIME = (long) .5 * 60 * 60;
