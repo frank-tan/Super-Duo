@@ -19,9 +19,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import it.jaschke.alexandria.ui.MainActivity;
 import it.jaschke.alexandria.R;
 import it.jaschke.alexandria.data.AlexandriaContract;
+import it.jaschke.alexandria.ui.MainActivity;
 
 
 /**
@@ -155,6 +155,12 @@ public class BookService extends IntentService {
                 }
             }
 
+        }
+
+        // Handle API connection failure
+        if(bookJsonString == null) {
+            Log.e(LOG_TAG, "Failed to connect to API. Nothing returned.");
+            return;
         }
 
         final String ITEMS = "items";
